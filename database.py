@@ -1,5 +1,7 @@
 import sqlite3
 
+class DoctorExists(Exception): pass
+
 class Database:
 	def __init__(self, path, schema='schema.sql'):
 		self.conn = sqlite3.connect(path)
@@ -8,25 +10,24 @@ class Database:
 
 		try: self.cur.executescript(self.schema)
 		except sqlite3.OperationalError: pass
+	
+	def doctor_exists(self, username):
+		query = 'SELECT COUNT(*) FROM doctors WHERE username=?'
+		resp = self.cur.execute(query, (username,)).fetchone()[0]
+		return bool(count)
 
-class DatabaseObject:
-	def __init__(self):
-		pass
+	def doctor_add(self, username, password):
+		if self.doctor_exists(username): raise DoctorExists()
+		query = 'INSERT INTO doctors VALUES (?,?)'
+		self.cur.execute(query, (username, password))
+		self.conn.commit()
 
-class Doctor(DatabaseObject):
-	def __init__(self):
-		DatabaseObject.__init__(self)
-
-class NewVisit(DatabaseObject):
-	def __init__(self):
-		DatabaseObject.__init__(self)
-
-class Visit(DatabaseObject):
-	def __init__(self):
-		DatabaseObject.__init__(self)
-
-class Patient(DatabaseObject):
-	def __init__(self):
-		DatabaseObject.__init__(self)
+	def doctor_check(self, username, password):
+		query = 'SELECT COUNT(*) FROM doctors WHERE username=? AND password=?'
+		count = self.cur.execute(query, (username, password)).fetchone()[0]
+		return bool(count)
 
 db = Database('database.db')
+db.add_doctor('test', 'password')
+print(db.check_doctor('test', 'passworsd'))
+db.test()
