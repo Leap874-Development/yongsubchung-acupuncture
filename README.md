@@ -1,4 +1,4 @@
-# Template Bot v1.0
+# Acupuncture Webapp v0.1
 By [William Gardner](https://github.com/wg4568/), written for _@yongsubchung_ on Fiverr
 
 ## Installation
