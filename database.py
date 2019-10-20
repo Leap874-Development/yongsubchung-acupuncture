@@ -133,6 +133,3 @@ class Database:
 			paid_check_by, note
 		))
 		self.conn.commit()
-
-db = Database('database.db')
-db.visit_add('fff', 'doc', exam_tongue='tongue', note='COOL!', cupping=True)
