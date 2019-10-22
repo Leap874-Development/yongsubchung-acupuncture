@@ -4,35 +4,54 @@ import datetime
 class DoctorExists(Exception): pass
 class PatientNotFound(Exception): pass
 
+def with_database(func):
+	def wrapped(self, *args, **kwargs):
+		conn = sqlite3.connect(self.path)
+		cur = conn.cursor()
+		resp = func(self, cur, *args, **kwargs)
+		conn.commit()
+		conn.close()
+		return resp
+	return wrapped
+
+
 class Database:
 	def __init__(self, path, schema='documents/schema.sql'):
-		self.conn = sqlite3.connect(path)
-		self.cur = self.conn.cursor()
+		self.path = path
 		self.schema = open(schema, 'r').read()
+		
+		conn = sqlite3.connect(path)
+		cur = conn.cursor()
 
-		try: self.cur.executescript(self.schema)
+		try: cur.executescript(self.schema)
 		except sqlite3.OperationalError: pass
+
+		conn.commit()
+		conn.close()
 	
-	def doctor_exists(self, username):
+	@with_database
+	def doctor_exists(self, cur, username):
 		query = 'SELECT COUNT(*) FROM doctors WHERE username=?'
-		count = self.cur.execute(query, (username,)).fetchone()[0]
+		count = cur.execute(query, (username,)).fetchone()[0]
 		return bool(count)
 
 	# TODO: salt and hashing
-	def doctor_add(self, username, password):
+	@with_database
+	def doctor_add(self, cur, username, password):
 		if self.doctor_exists(username): raise DoctorExists()
 		query = 'INSERT INTO doctors VALUES (?,?)'
-		self.cur.execute(query, (username, password))
-		self.conn.commit()
+		cur.execute(query, (username, password))
 
 	# TODO: salt and hashing
-	def doctor_check(self, username, password):
+	@with_database
+	def doctor_check(self, cur, username, password):
 		query = 'SELECT COUNT(*) FROM doctors WHERE username=? AND password=?'
-		count = self.cur.execute(query, (username, password)).fetchone()[0]
+		count = cur.execute(query, (username, password)).fetchone()[0]
 		return bool(count)
 	
 	# TODO: generate suffix
-	def patient_add(self, patient_key, last_name, first_name, gender, dob,
+	@with_database
+	def patient_add(self, cur, patient_key, last_name, first_name, gender, dob,
 					height=None, weight=None, addr1=None, addr2=None,
 					phone1=None, phone2=None, email=None, medical_history=None,
 					medications=None, family_hx=None, allergy=None, note=None,
@@ -42,26 +61,28 @@ class Database:
 		create_date = datetime.date.today()
 
 		query = 'INSERT INTO patient VALUES (%s)' % ('?,' * 20)[:-1]
-		self.cur.execute(query, (
+		cur.execute(query, (
 			create_date, suffix, patient_key, last_name, first_name, gender,
 			dob, height, weight, addr1, addr2, phone1, phone2, email,
 			medical_history, medications, family_hx, allergy, note, attachment
 		))
-		self.conn.commit()
-	
-	def patient_exists(self, patient_key):
+
+	@with_database	
+	def patient_exists(self, cur, patient_key):
 		query = 'SELECT COUNT(*) FROM patient WHERE patient_key=?'
-		count = self.cur.execute(query, (patient_key,)).fetchone()[0]
+		count = cur.execute(query, (patient_key,)).fetchone()[0]
 		return bool(count)
 
-	def patient_search(self, **kwargs):
+	@with_database
+	def patient_search(self, cur, **kwargs):
 		query = 'SELECT * FROM patient WHERE ' 
 		query += ' AND '.join([ '%s=?' % a for a in kwargs ])
 		values = [ kwargs[a] for a in kwargs ]
-		resp = self.cur.execute(query, values)
+		resp = cur.execute(query, values)
 		return resp
 
-	def visit_add(self, patient_key, doctor, temperature=None,
+	@with_database
+	def visit_add(self, cur, patient_key, doctor, temperature=None,
 				  heart_rate=None, blood_pressure_h=None, blood_pressure_l=None,
 				  chief_complaint=None, present_illness=None, feedback=None,
 				  exam_appetite=None, exam_digest=None, exam_bm=None,
@@ -78,7 +99,7 @@ class Database:
 		visit_date = datetime.date.today()
 
 		query = 'INSERT INTO visit VALUES (%s)' % ('?,' * 32)[:-1]
-		self.cur.execute(query, (
+		cur.execute(query, (
 			patient_key, doctor, visit_date, temperature, heart_rate,
 			blood_pressure_h, blood_pressure_l, chief_complaint,
 			present_illness, feedback, exam_appetite, exam_digest, exam_bm,
@@ -87,9 +108,9 @@ class Database:
 			moxa, cupping, eacu, arricular, condition_treated, fee, paid,
 			paid_check_by, note
 		))
-		self.conn.commit()
 	
-	def new_visit_add(self, patient_key, doctor, temperature=None,
+	@with_database
+	def new_visit_add(self, cur, patient_key, doctor, temperature=None,
 					  heart_rate=None, blood_pressure_h=None,
 					  blood_pressure_l=None, chief_complaint=None,
 					  location=None, onset=None, provocation=None,
@@ -117,7 +138,7 @@ class Database:
 		visit_date = datetime.date.today()
 
 		query = 'INSERT INTO visit VALUES (%s)' % ('?,' * 58)[:-1]
-		self.cur.execute(query, (
+		cur.execute(query, (
 			patient_key, doctor, visit_date, temperature, heart_rate,
 			blood_pressure_h, blood_pressure_l, chief_complaint, location,
 			onset, provocation, palliation, quality, region, severity,
@@ -132,4 +153,3 @@ class Database:
 			acu_points, moxa, cupping, auricular, condition_treated, fee, paid,
 			paid_check_by, note
 		))
-		self.conn.commit()

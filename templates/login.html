@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 		<link rel="shortcut icon" href="/static/img/favicon.png">
 		
-		<title>Vital Acupuncture</title>
+		<title>Vital Acupuncture | Login</title>
 	</head>
 
 	<style>
@@ -40,8 +40,10 @@
 			<img class="mb-4" src="/static/img/favicon.png" alt="" width="72" height="72">
 			<h1 class="h3 mb-3 font-weight-normal">Doctor Login</h1>
 
-			<input class="form-control" placeholder="Doctor" required autofocus>
-			<input class="form-control" placeholder="Password" type="password" required>
+			<div id="error" class="alert alert-danger" role="alert" hidden>Invalid login</div>
+
+			<input class="form-control" placeholder="Doctor" name="doctor" required autofocus>
+			<input class="form-control" placeholder="Password" name="password" type="password" required>
 
 			<br/>
 
@@ -50,6 +52,13 @@
 
 		<script src="/static/js/jquery-3.4.1.min.js"></script>
 		<script src="/static/js/bootstrap.min.js"></script>
+
+		<script>
+			var params = new URLSearchParams(window.location.search)
+
+			if (params.get('err') == 1)
+				$('#error').attr('hidden', false)
+		</script>
 	</body>
 </html>
 
