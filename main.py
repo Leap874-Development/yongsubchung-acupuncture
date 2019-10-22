@@ -8,7 +8,7 @@ with open('config.json', 'r') as f:
 
 @app.route('/')
 def index():
-	return 'unimplemented'
+	return render_template('index.html')
 
 @app.route('/login')
 def login():
