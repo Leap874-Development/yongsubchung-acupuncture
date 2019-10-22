@@ -5,7 +5,7 @@ class DoctorExists(Exception): pass
 class PatientNotFound(Exception): pass
 
 class Database:
-	def __init__(self, path, schema='schema.sql'):
+	def __init__(self, path, schema='documents/schema.sql'):
 		self.conn = sqlite3.connect(path)
 		self.cur = self.conn.cursor()
 		self.schema = open(schema, 'r').read()
