@@ -37,7 +37,7 @@ def index():
 def login():
 	if request.method == 'GET':
 		if session['logged_in']:
-			return redirect('/patients')
+			return redirect('home')
 		return render_template('login.html')
 	elif request.method == 'POST':
 		doctor = request.values.get('doctor')
@@ -45,24 +45,24 @@ def login():
 		if db.doctor_check(doctor, password):
 			session['logged_in'] = True
 			session['doctor'] = doctor
-			return redirect('/patients')
+			return redirect('home')
 		else:
-			return redirect('/login?err=1')
+			return redirect('login?err=1')
 
 @app.route('/logout', methods=['GET'])
 def logout():
 	session['logged_in'] = False
 	session['doctor'] = None
-	return redirect('/login')
+	return redirect('login')
 
 @app.route('/revenue')
 def revenue():
 	return 'unimplemented'
 
-@app.route('/patients')
+@app.route('/home')
 @require_authentication
-def patients():
-	return render_template('patients.html', doctor=session['doctor'])
+def home():
+	return render_template('home.html', doctor=session['doctor'])
 
 @app.route('/patient/<name>')
 def patient_detail(name):
