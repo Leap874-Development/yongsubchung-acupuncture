@@ -1,3 +1,4 @@
+from werkzeug import security
 import sqlite3
 import datetime
 
@@ -35,20 +36,20 @@ class Database:
 		count = cur.execute(query, (username,)).fetchone()[0]
 		return bool(count)
 
-	# TODO: salt and hashing
 	@with_database
 	def doctor_add(self, cur, username, password):
 		if self.doctor_exists(username): raise DoctorExists()
+		hashed = security.generate_password_hash(password)
 		query = 'INSERT INTO doctors VALUES (?,?)'
-		cur.execute(query, (username, password))
+		cur.execute(query, (username, hashed))
 
-	# TODO: salt and hashing
 	@with_database
 	def doctor_check(self, cur, username, password):
-		query = 'SELECT COUNT(*) FROM doctors WHERE username=? AND password=?'
-		count = cur.execute(query, (username, password)).fetchone()[0]
-		return bool(count)
-	
+		if not self.doctor_exists(username): return False
+		query = 'SELECT * FROM doctors WHERE username=?'
+		doctor, hashed = cur.execute(query, (username,)).fetchone()
+		return security.check_password_hash(hashed, password)
+
 	# TODO: generate suffix
 	@with_database
 	def patient_add(self, cur, patient_key, last_name, first_name, gender, dob,

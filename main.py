@@ -56,6 +56,7 @@ def logout():
 	return redirect('login')
 
 @app.route('/revenue')
+@require_authentication
 def revenue():
 	return 'unimplemented'
 
@@ -65,18 +66,22 @@ def home():
 	return render_template('home.html', doctor=session['doctor'])
 
 @app.route('/patient/<name>')
+@require_authentication
 def patient_detail(name):
 	return name
 
 @app.route('/patient/<name>/new_visit')
+@require_authentication
 def patient_new_visit(name):
 	return name
 
 @app.route('/patient/<name>/return_visit')
+@require_authentication
 def patient_return_visit(name):
 	return name
 
 @app.route('/patient/new')
+@require_authentication
 def patient_new():
 	return 'unimplemented'
 
