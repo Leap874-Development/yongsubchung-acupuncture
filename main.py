@@ -62,7 +62,7 @@ def revenue():
 @app.route('/patients')
 @require_authentication
 def patients():
-	return 'unimplemented'
+	return render_template('patients.html', doctor=session['doctor'])
 
 @app.route('/patient/<name>')
 def patient_detail(name):
