@@ -20,7 +20,8 @@ def require_authentication(func):
 		if session['logged_in']:
 			return func(*args, **kwargs)
 		else:
-			return redirect('login')
+			return redirect('/login')
+	wrapper.__name__ = func.__name__
 	return wrapper
 
 @app.before_request
@@ -31,13 +32,13 @@ def before_request():
 
 @app.route('/', methods=['GET'])
 def index():
-	return redirect('login')
+	return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'GET':
 		if session['logged_in']:
-			return redirect('home')
+			return redirect('/home')
 		return render_template('login.html')
 	elif request.method == 'POST':
 		doctor = request.values.get('doctor')
@@ -45,7 +46,7 @@ def login():
 		if db.doctor_check(doctor, password):
 			session['logged_in'] = True
 			session['doctor'] = doctor
-			return redirect('home')
+			return redirect('/home')
 		else:
 			return redirect('login?err=1')
 
@@ -53,7 +54,7 @@ def login():
 def logout():
 	session['logged_in'] = False
 	session['doctor'] = None
-	return redirect('login')
+	return redirect('/login')
 
 @app.route('/revenue')
 @require_authentication
