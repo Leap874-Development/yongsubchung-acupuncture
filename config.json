@@ -2,5 +2,6 @@
 	"ip": "0.0.0.0",
 	"port": 8000,
 	"secret_length": 64,
-	"debug": true
+	"debug": true,
+	"max_results": 50
 }

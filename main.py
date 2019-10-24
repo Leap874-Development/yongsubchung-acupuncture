@@ -64,7 +64,10 @@ def revenue():
 @app.route('/home')
 @require_authentication
 def home():
-	return render_template('home.html', doctor=session['doctor'])
+	query = request.args.get('query')
+	if not query: query = ''
+	users = db.patient_search_query(query)
+	return render_template('home.html', doctor=session['doctor'], query=query, users=users)
 
 @app.route('/patient/<name>')
 @require_authentication

@@ -52,13 +52,14 @@ class Database:
 
 	# TODO: generate suffix
 	@with_database
-	def patient_add(self, cur, patient_key, last_name, first_name, gender, dob,
+	def patient_add(self, cur, last_name, first_name, gender, dob,
 					height=None, weight=None, addr1=None, addr2=None,
 					phone1=None, phone2=None, email=None, medical_history=None,
 					medications=None, family_hx=None, allergy=None, note=None,
 					attachment=None):
 
-		suffix = 'suffix'
+		suffix = 0
+		patient_key = last_name[0].upper() + dob.strftime('%y%m%d') + str(suffix)
 		create_date = datetime.date.today()
 
 		query = 'INSERT INTO patient VALUES (%s)' % ('?,' * 20)[:-1]
@@ -77,9 +78,25 @@ class Database:
 	@with_database
 	def patient_search(self, cur, **kwargs):
 		query = 'SELECT * FROM patient WHERE ' 
-		query += ' AND '.join([ '%s=?' % a for a in kwargs ])
-		values = [ kwargs[a] for a in kwargs ]
-		resp = cur.execute(query, values)
+		query += ' AND '.join([ a + ' LIKE ?' for a in kwargs ])
+		values = [ '%'+kwargs[a]+'%' for a in kwargs ]
+		resp = cur.execute(query, values).fetchall()
+		return resp
+	
+	@with_database
+	def patient_search_query(self, cur, search, columns=['first_name', 'last_name', 'phone1', 'phone2', 'email']):
+		if len(search) < 3: search = ''
+		query = 'SELECT * FROM patient WHERE '
+		search = search.split()
+		values = []
+		items = []
+		for item in search:
+			for col in columns:
+				items.append(col + ' LIKE ?')
+				values.append('%' + item + '%')
+		query += ' OR '.join(items)
+		if not len(items): query = 'SELECT * FROM patient'
+		resp = cur.execute(query, values).fetchall()
 		return resp
 
 	@with_database
@@ -154,3 +171,19 @@ class Database:
 			acu_points, moxa, cupping, auricular, condition_treated, fee, paid,
 			paid_check_by, note
 		))
+
+# db = Database('database.db')
+# print(db.patient_search_query(''))
+
+# db.patient_add(
+# 	'Jules', 'Mary', 'f', datetime.date(1956, 3, 14),
+# 	height=65, weight=196, addr1='5677 Autumn Drive',
+# 	email='mjuliee3@gmail.com', phone1=6699937412
+# )
+
+
+# # self, cur, patient_key, last_name, first_name, gender, dob,
+# # 					height=None, weight=None, addr1=None, addr2=None,
+# # 					phone1=None, phone2=None, email=None, medical_history=None,
+# # 					medications=None, family_hx=None, allergy=None, note=None,
+# # 					attachment=None):

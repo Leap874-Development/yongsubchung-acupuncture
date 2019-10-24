@@ -63,7 +63,7 @@
                 <!-- search -->
                 <form class="col-md-9" method="GET">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="query" placeholder="Search...">
+                        <input type="text" class="form-control" name="query" placeholder="Search..." value="{{ query }}">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -73,13 +73,42 @@
                 <!-- buttons -->
                 <div class="col-md-3">
                     <div class="float-right">
-                        <a href=""><button class="btn btn-success">New Patient</button></a>
-                        <a href=""><button class="btn btn-secondary">Reports</button></a>
+                        <a href="/patient/new"><button class="btn btn-success">New Patient</button></a>
+                        <a href="/reports"><button class="btn btn-secondary">Reports</button></a>
                     </div>
                 </div>
             </div>
-        </div>
+            
+            <br/>
 
+            <!-- PATIENT LIST -->
+            <!-- TODO: sorting -->
+            <div class="containter">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Pkey</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">DOB</th>
+                            <th scope="col">Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user[2] }}</td>
+                                <td>{{ user[4] }}</td>
+                                <td>{{ user[3] }}</td>
+                                <td>{{ user[6] }}</td>
+                                <td>{{ user[9] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- ('2019-10-23', 0, 'G9512140', 'Gardner', 'William', 'm', '1995-12-14', '70', '150', '1998 Curtmont Street', None, '4087977417', None, 'wg4568@gmail.com', None, None, None, None, None, None) -->
 		<script src="/static/js/popper.min.js"></script>
 		<script src="/static/js/jquery-3.4.1.min.js"></script>
 		<script src="/static/js/bootstrap.min.js"></script>
