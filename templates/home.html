@@ -84,6 +84,9 @@
             <!-- PATIENT LIST -->
             <!-- TODO: sorting -->
             <div class="containter">
+                {% if truncated %}
+                    <p><i>results truncated (max {{ max_results }})</i></p>
+                {% endif %}
                 <table class="table table-striped">
                     <thead>
                         <tr>

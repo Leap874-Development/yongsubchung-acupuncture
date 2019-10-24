@@ -83,7 +83,17 @@ def home():
 	query = request.args.get('query')
 	if not query: query = ''
 	users = db.patient_search_query(query)
-	return render_template('home.html', doctor=session['doctor'], query=query, users=users)
+	truncated = False
+	if len(users) > config['max_results']:
+		users = users[:config['max_results']]
+		truncated = True
+	return render_template('home.html',
+		doctor=session['doctor'],
+		query=query,
+		users=users,
+		truncated=truncated,
+		max_results=config['max_results']
+	)
 
 @app.route('/patient/<pkey>')
 @require_authentication
