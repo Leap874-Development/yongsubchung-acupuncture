@@ -56,9 +56,9 @@ def logout():
 	session['doctor'] = None
 	return redirect('/login')
 
-@app.route('/revenue')
+@app.route('/reports')
 @require_authentication
-def revenue():
+def reports():
 	return 'unimplemented'
 
 @app.route('/home')
@@ -69,25 +69,25 @@ def home():
 	users = db.patient_search_query(query)
 	return render_template('home.html', doctor=session['doctor'], query=query, users=users)
 
-@app.route('/patient/<name>')
+@app.route('/patient/<pkey>')
 @require_authentication
-def patient_detail(name):
-	return name
-
-@app.route('/patient/<name>/new_visit')
-@require_authentication
-def patient_new_visit(name):
-	return name
-
-@app.route('/patient/<name>/return_visit')
-@require_authentication
-def patient_return_visit(name):
-	return name
+def patient_detail(pkey):
+	return render_template('patient/view.html', doctor=session['doctor'], patient=pkey)
 
 @app.route('/patient/new')
 @require_authentication
 def patient_new():
-	return 'unimplemented'
+	return render_template('patient/new.html', doctor=session['doctor'])
+
+@app.route('/patient/<pkey>/new_visit')
+@require_authentication
+def patient_new_visit(pkey):
+	return render_template('patient/new_visit.html', doctor=session['doctor'], patient=pkey)
+
+@app.route('/patient/<pkey>/return_visit')
+@require_authentication
+def patient_return_visit(pkey):
+	return render_template('patient/return_visit.html', doctor=session['doctor'], patient=pkey)
 
 app.run(
 	debug=config['debug'],
