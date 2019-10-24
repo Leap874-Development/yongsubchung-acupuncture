@@ -15,6 +15,15 @@ if config['debug']:
 else:
     app.secret_key = 'super_secret_debug_key'
 
+def format_phone(raw):
+    raw = str(raw)
+    if len(raw) != 10:
+        return raw
+    else:
+        return '(%s)%s-%s' % (raw[0:3], raw[3:6], raw[6:10])
+
+app.jinja_env.globals.update(format_phone=format_phone)
+
 def require_authentication(func):
     def wrapper(*args, **kwargs):
         if session['logged_in']:

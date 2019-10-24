@@ -128,14 +128,14 @@
                 <tr>
                     <th class="data-label">Phone 1</th>
                     <td class="data-value" colspan="5">
-                        {% if patient[11] %} {{ patient[11] }}
+                        {% if patient[11] %} {{ format_phone(patient[11]) }}
                         {% else %}<i>N/A</i>{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Phone 2</th>
                     <td class="data-value" colspan="5">
-                        {% if patient[12] %} {{ patient[12] }}
+                        {% if patient[12] %} {{ format_phone(patient[12]) }}
                         {% else %}<i>N/A</i>{% endif %}
                     </td>
                 </tr>
