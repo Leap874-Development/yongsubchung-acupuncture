@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 		<link rel="shortcut icon" href="/static/img/favicon.png">
 		
-		<title>Vital Acupuncture | New Patient</title>
+		<title>Vital Acupuncture | New Visit</title>
 	</head>
 
 	<style>
@@ -53,14 +53,14 @@
             <nav>
                 <ol class="pb-0 breadcrumb breadcrumb-transparent">
                     <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/patient/{{ patient }}">Patient</a></li>
-                    <li class="breadcrumb-item active"><a href="/patient/{{ patient }}/new_visit">New Visit</a></li>
+                    <li class="breadcrumb-item"><a href="/patient/{{ pkey }}">Patient</a></li>
+                    <li class="breadcrumb-item active"><a href="/patient/{{ pkey }}/new_visit">New Visit</a></li>
                 </ol>
             </nav>
 
             <hr/>
 
-            <p>Patient {{ patient }} new visit</p>
+            <p>Patient {{ pkey }} new visit</p>
         </div>
 
         <script src="/static/js/popper.min.js"></script>

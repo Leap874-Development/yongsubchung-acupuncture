@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 		<link rel="shortcut icon" href="/static/img/favicon.png">
 		
-		<title>Vital Acupuncture | New Patient</title>
+		<title>Vital Acupuncture | {{ pkey }}</title>
 	</head>
 
 	<style>
@@ -22,6 +22,19 @@
 
         .breadcrumb-transparent {
             background-color: transparent;
+        }
+
+        .data-label {
+            width: 10%;
+            text-align: right;
+        }
+
+        .data-value {
+            text-align: left;
+        }
+
+        .data-3 {
+            width: calc(70% / 3);
         }
     </style>
 
@@ -53,13 +66,139 @@
             <nav>
                 <ol class="pb-0 breadcrumb breadcrumb-transparent">
                     <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="/patient/{{ patient }}">Patient</a></li>
+                    <li class="breadcrumb-item active"><a href="/patient/{{ pkey }}">Patient</a></li>
                 </ol>
             </nav>
 
             <hr/>
 
-            <p>Patient {{ patient }} view</p>
+            <h3>Patient {{ pkey }}</h3>
+
+            <br/>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th class="data-label">Fname</th>
+                    <td class="data-value data-3">
+                        {% if patient[3] %} {{ patient[3] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                    <th class="data-label">Lname</th>
+                    <td class="data-value data-3">
+                        {% if patient[4] %} {{ patient[4] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                    <th class="data-label">DOB</th>
+                    <td class="data-value data-3">
+                        {% if patient[6] %} {{ patient[6] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Gender</th>
+                    <td class="data-value">
+                        {% if patient[5] %} {{ patient[5] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                    <th class="data-label">Height</th>
+                    <td class="data-value">
+                        {% if patient[3] %} {{ patient[3] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                    <th class="data-label">Weight</th>
+                    <td class="data-value">
+                        {% if patient[7] %} {{ patient[7] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Addr 1</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[9] %} {{ patient[9] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Addr 2</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[10] %} {{ patient[10] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Phone 1</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[11] %} {{ patient[11] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Phone 2</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[12] %} {{ patient[12] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Email</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[13] %} {{ patient[13] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">History</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[14] %} {{ patient[14] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Family HX</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[16] %} {{ patient[16] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Allergy</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[17] %} {{ patient[17] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="data-label">Note</th>
+                    <td class="data-value" colspan="5">
+                        {% if patient[18] %} {{ patient[18] }}
+                        {% else %}<i>N/A</i>{% endif %}
+                    </td>
+                </tr>
+            </table>
+
+             <!--
+                0  create_date
+                1  suffix
+                2  patient_key
+                3  last_name
+                4  first_name
+                5  gender
+                6  dob
+                7  height
+                8  weight
+                9  addr1
+                10 addr2
+                11 phone1
+                12 phone2
+                13 email
+                14 medical_history
+                15 medications
+                16 family_hx
+                17 allergy
+                18 note
+                19 attachment
+            -->
+        
         </div>
 
         <script src="/static/js/popper.min.js"></script>

@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 		<link rel="shortcut icon" href="/static/img/favicon.png">
 		
-		<title>Vital Acupuncture | Returning Visit</title>
+		<title>Vital Acupuncture | Error {{ code }}</title>
 	</head>
 
 	<style>
@@ -52,15 +52,16 @@
             <!-- BREADCRUMBS -->
             <nav>
                 <ol class="pb-0 breadcrumb breadcrumb-transparent">
-                        <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                        <li class="breadcrumb-item"><a href="/patient/{{ pkey }}">Patient</a></li>
-                        <li class="breadcrumb-item active"><a href="/patient/{{ pkey }}/return_visit">Returning Visit</a></li>
-                    </ol>
+                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                    <li class="breadcrumb-item active"><a>Error</a></li>
+                </ol>
             </nav>
 
             <hr/>
 
-            <p>Patient {{ pkey }} return visit</p>
+            <h3>Error {{ code }}</h3>
+            <p>{{ message }}</p>            
+
         </div>
 
         <script src="/static/js/popper.min.js"></script>

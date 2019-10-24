@@ -105,7 +105,6 @@ create table patient (
 	allergy		TEXT,
 	note            TEXT,
 	attachment	  TEXT       -- Just show:  It will be the URL for s3-object
-	
 );
 
 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, abort
 import json
 import database
 import secrets
@@ -30,6 +30,22 @@ def before_request():
 		session['logged_in'] = False
 		session['doctor'] = None
 
+@app.errorhandler(404)
+def page_not_found(error):
+	return render_template('error.html',
+		code=404,
+		message='Page not found',
+		doctor=session['doctor']
+	), 404
+
+@app.errorhandler(500)
+def page_not_found(error):
+	return render_template('error.html',
+		code=500,
+		message='An internal server error occured',
+		doctor=session['doctor']
+	), 500
+
 @app.route('/', methods=['GET'])
 def index():
 	return redirect('/login')
@@ -59,7 +75,7 @@ def logout():
 @app.route('/reports')
 @require_authentication
 def reports():
-	return 'unimplemented'
+	return render_template('reports.html', doctor=session['doctor'])
 
 @app.route('/home')
 @require_authentication
@@ -72,7 +88,10 @@ def home():
 @app.route('/patient/<pkey>')
 @require_authentication
 def patient_detail(pkey):
-	return render_template('patient/view.html', doctor=session['doctor'], patient=pkey)
+	results = db.patient_search(patient_key=pkey)
+	if len(results) != 1: abort(500)
+	else: patient = results[0]
+	return render_template('patient/view.html', doctor=session['doctor'], pkey=pkey, patient=patient)
 
 @app.route('/patient/new')
 @require_authentication
@@ -82,12 +101,12 @@ def patient_new():
 @app.route('/patient/<pkey>/new_visit')
 @require_authentication
 def patient_new_visit(pkey):
-	return render_template('patient/new_visit.html', doctor=session['doctor'], patient=pkey)
+	return render_template('patient/new_visit.html', doctor=session['doctor'], pkey=pkey)
 
 @app.route('/patient/<pkey>/return_visit')
 @require_authentication
 def patient_return_visit(pkey):
-	return render_template('patient/return_visit.html', doctor=session['doctor'], patient=pkey)
+	return render_template('patient/return_visit.html', doctor=session['doctor'], pkey=pkey)
 
 app.run(
 	debug=config['debug'],
