@@ -171,19 +171,3 @@ class Database:
             acu_points, moxa, cupping, auricular, condition_treated, fee, paid,
             paid_check_by, note
         ))
-
-# db = Database('database.db')
-# print(db.patient_search_query(''))
-
-# db.patient_add(
-#     'Jules', 'Mary', 'f', datetime.date(1956, 3, 14),
-#     height=65, weight=196, addr1='5677 Autumn Drive',
-#     email='mjuliee3@gmail.com', phone1=6699937412
-# )
-
-
-# # self, cur, patient_key, last_name, first_name, gender, dob,
-# #                     height=None, weight=None, addr1=None, addr2=None,
-# #                     phone1=None, phone2=None, email=None, medical_history=None,
-# #                     medications=None, family_hx=None, allergy=None, note=None,
-# #                     attachment=None):

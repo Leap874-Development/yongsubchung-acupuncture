@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="/static/css/bootstrap.min.css">
         <link rel="shortcut icon" href="/static/img/favicon.png">
         
-        <title>Vital Acupuncture | Patient Detail</title>
+        <title>Vital Acupuncture | Patient Edit</title>
     </head>
 
     <style>
@@ -66,16 +66,17 @@
             <nav>
                 <ol class="pb-0 breadcrumb breadcrumb-transparent">
                     <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="/patient/{{ pkey }}">Patient</a></li>
+                    <li class="breadcrumb-item"><a href="/patient/{{ pkey }}">Patient</a></li>
+                    <li class="breadcrumb-item active"><a href="/patient/{{ pkey }}/edit">Edit</a></li>
                 </ol>
             </nav>
 
             <hr/>
 
             <div class="row">
-                <h3>Patient {{ pkey }}</h3>
+                <h3>Editing {{ pkey }}</h3>
                 <a href="/patient/{{ pkey }}/edit">
-                    <button type="button" class="ml-2 btn btn-secondary">Edit</button>
+                    <button type="button" class="ml-2 btn btn-success">Save</button>
                 </a>
             </div>
 
@@ -84,113 +85,110 @@
             <table class="table table-bordered">
                 <tr>
                     <th class="data-label">Fname</th>
-                    <td class="data-value data-3">
+                    <td class="data-value data-3" contenteditable="true">
                         {% if patient[3] %} {{ patient[3] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                     <th class="data-label">Lname</th>
-                    <td class="data-value data-3">
+                    <td class="data-value data-3" contenteditable="true">
                         {% if patient[4] %} {{ patient[4] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                     <th class="data-label">DOB</th>
-                    <td class="data-value data-3">
+                    <td class="data-value data-3" contenteditable="true">
                         {% if patient[6] %} {{ patient[6] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Gender</th>
                     <td class="data-value">
-                        {% if patient[5] %} 
-                            {% if patient[5] == 'm' %}
-                                Male
-                            {% else %}
-                                Female
-                            {% endif %}
-                        {% else %}<i>N/A</i>{% endif %}
+						<select class="custom-select" id="inputGroupSelect01">
+							<option value="m" {% if patient[5] == 'm' %}selected{% endif %}>Male</option>
+							<option value="f" {% if patient[5] == 'f' %}selected{% endif %}>Female</option>
+						</select>
                     </td>
                     <th class="data-label">Height</th>
-                    <td class="data-value">
+                    <td class="data-value" contenteditable="true">
                         {% if patient[3] %} {{ patient[3] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                     <th class="data-label">Weight</th>
-                    <td class="data-value">
+                    <td class="data-value" contenteditable="true">
                         {% if patient[7] %} {{ patient[7] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Addr 1</th>
-                    <td class="data-value" colspan="5">
+                    <td class="data-value" colspan="5" contenteditable="true">
                         {% if patient[9] %} {{ patient[9] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Addr 2</th>
-                    <td class="data-value" colspan="5">
+					<td class="data-value" colspan="5" contenteditable="true">
                         {% if patient[10] %} {{ patient[10] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Phone 1</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[11] %} {{ format_phone(patient[11]) }}
-                        {% else %}<i>N/A</i>{% endif %}
+                    <td class="data-value" colspan="5" contenteditable="true">
+                        {% if patient[11] %} {{ patient[11] }}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Phone 2</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[12] %} {{ format_phone(patient[12]) }}
-                        {% else %}<i>N/A</i>{% endif %}
+                    <td class="data-value" colspan="5" contenteditable="true">
+                        {% if patient[12] %} {{ patient[12] }}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Email</th>
-                    <td class="data-value" colspan="5">
+                    <td class="data-value" colspan="5" contenteditable="true">
                         {% if patient[13] %} {{ patient[13] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">History</th>
-                    <td class="data-value" colspan="5">
+                    <td class="data-value" colspan="5" contenteditable="true">
                         {% if patient[14] %} {{ patient[14] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Family HX</th>
-                    <td class="data-value" colspan="5">
+                    <td class="data-value" colspan="5" contenteditable="true">
                         {% if patient[16] %} {{ patient[16] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Allergy</th>
-                    <td class="data-value" colspan="5">
+                    <td class="data-value" colspan="5" contenteditable="true">
                         {% if patient[17] %} {{ patient[17] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Note</th>
-                    <td class="data-value" colspan="5">
+                    <td class="data-value" colspan="5" contenteditable="true">
                         {% if patient[18] %} {{ patient[18] }}
-                        {% else %}<i>N/A</i>{% endif %}
+                        {% else %}{% endif %}
                     </td>
                 </tr>
                 <tr>
                     <th class="data-label">Attachment</th>
-                    <td class="data-value" colspan="5">
+                    <td class="data-value" colspan="5" contenteditable="true">
                         {% if patient[19] %}
                             <a href="{{ patient[19] }}" target="__blank">{{ patient[19] }}</a>
                         {% else %}
-                            <i>N/A</i>
+                            
                         {% endif %}
                     </td>
                 </tr>

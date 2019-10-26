@@ -117,6 +117,14 @@ def patient_detail(pkey):
 def patient_new():
     return render_template('patient/new.html', doctor=session['doctor'])
 
+@app.route('/patient/<pkey>/edit')
+@require_authentication
+def patient_edit(pkey):
+    results = db.patient_search(patient_key=pkey)
+    if len(results) != 1: abort(500)
+    else: patient = results[0]
+    return render_template('patient/edit.html', doctor=session['doctor'], pkey=pkey, patient=patient)
+
 @app.route('/patient/<pkey>/new_visit')
 @require_authentication
 def patient_new_visit(pkey):
