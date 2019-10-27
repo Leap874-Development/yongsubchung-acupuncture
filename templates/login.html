@@ -41,7 +41,9 @@
             <h1 class="h3 mb-3 font-weight-normal">Doctor Login</h1>
 
             <div id="error" class="alert alert-danger" role="alert" hidden>Invalid login</div>
+            <div id="timeout" class="alert alert-warning" role="alert" hidden>Session timed out</div>
 
+            <input id="redirect" type="hidden" value="/home" name="redirect">
             <input class="form-control" placeholder="Doctor" name="doctor" required autofocus>
             <input class="form-control" placeholder="Password" name="password" type="password" required>
 
@@ -56,8 +58,14 @@
         <script>
             var params = new URLSearchParams(window.location.search)
 
+            if (params.has('redirect'))
+                $('#redirect').val(params.get('redirect'))
+
             if (params.get('err') == 1)
                 $('#error').attr('hidden', false)
+
+            if (params.get('err') == 2)
+                $('#timeout').attr('hidden', false)
         </script>
     </body>
 </html>

@@ -29,7 +29,7 @@ def require_authentication(func):
         if session['logged_in']:
             return func(*args, **kwargs)
         else:
-            return redirect('/login')
+            return redirect('/login?err=2&redirect=%s' % request.path)
     wrapper.__name__ = func.__name__
     return wrapper
 
@@ -68,10 +68,11 @@ def login():
     elif request.method == 'POST':
         doctor = request.values.get('doctor')
         password = request.values.get('password')
+        redir = request.values.get('redirect')
         if db.doctor_check(doctor, password):
             session['logged_in'] = True
             session['doctor'] = doctor
-            return redirect('/home')
+            return redirect(redir)
         else:
             return redirect('login?err=1')
 
