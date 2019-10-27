@@ -23,6 +23,19 @@
         .breadcrumb-transparent {
             background-color: transparent;
         }
+
+        .data-label {
+            width: 10%;
+            text-align: right;
+        }
+
+        .data-value {
+            text-align: left;
+        }
+
+        .data-3 {
+            width: calc(70% / 3);
+        }
     </style>
 
     <body>
@@ -59,11 +72,142 @@
 
             <hr/>
 
-            <p>New patient</p>
+            <!-- TITLE -->
+            <div class="row">
+                <h3>New Patient</h3>
+                <button type="button" id="save" class="ml-2 btn btn-success">Create</button>
+                <a href="/home">
+                    <button type="button" class="ml-2 btn btn-danger">Cancel</button>
+                </a>
+            </div>
+
+            <br/>
+
+            <!-- PATIENT DATA -->
+            <table class="table table-bordered">
+                <tr>
+                    <th class="data-label">Fname</th>
+                    <td id="first_name" class="data-value data-3" contenteditable="true"></td>
+
+                    <th class="data-label">Lname</th>
+                    <td id="last_name" class="data-value data-3" contenteditable="true"></td>
+
+                    <th class="data-label">DOB</th>
+                    <td id="dob" class="data-value data-3" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Gender</th>
+                    <td class="data-value">
+						<select id="gender" class="custom-select" id="inputGroupSelect01">
+							<option value="m">Male</option>
+							<option value="f">Female</option>
+						</select>
+                    </td>
+
+                    <th class="data-label">Height</th>
+                    <td id="height" class="data-value" contenteditable="true"></td>
+
+                    <th class="data-label">Weight</th>
+                    <td id="weight" class="data-value" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Addr 1</th>
+                    <td id="addr1" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Addr 2</th>
+					<td id="addr2" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Phone 1</th>
+                    <td id="phone1" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Phone 2</th>
+                    <td id="phone2" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Email</th>
+                    <td id="email" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">History</th>
+                    <td id="medical_history" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Family HX</th>
+                    <td id="family_hx" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Allergy</th>
+                    <td id="allergy" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Note</th>
+                    <td id="note" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+                <tr>
+                    <th class="data-label">Attachment</th>
+                    <td id="attachment" class="data-value" colspan="5" contenteditable="true"></td>
+                </tr>
+            </table>
         </div>
+
+        <form id="form" method="POST">
+            <input type="hidden" name="first_name">
+            <input type="hidden" name="last_name">
+            <input type="hidden" name="dob">
+            <input type="hidden" name="gender">
+            <input type="hidden" name="height">
+            <input type="hidden" name="weight">
+            <input type="hidden" name="addr1">
+            <input type="hidden" name="addr2">
+            <input type="hidden" name="phone1">
+            <input type="hidden" name="phone2">
+            <input type="hidden" name="email">
+            <input type="hidden" name="medical_history">
+            <input type="hidden" name="family_hx">
+            <input type="hidden" name="allergy">
+            <input type="hidden" name="note">
+            <input type="hidden" name="attachment">
+        </form>
 
         <script src="/static/js/popper.min.js"></script>
         <script src="/static/js/jquery-3.4.1.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
+
+        <!-- SUBMIT SCRIPT -->
+        <script>
+            const vals = [
+                'first_name',
+                'last_name',
+                'dob',
+                'gender',
+                'height',
+                'weight',
+                'addr1',
+                'addr2',
+                'phone1',
+                'phone2',
+                'email',
+                'medical_history',
+                'family_hx',
+                'allergy',
+                'note',
+                'attachment'
+            ]
+
+            $('#save').click(() => {
+                vals.forEach((val) => {
+                    var formItem = $(`input[name=${val}]`)
+                    var tableItem = $(`#${val}`)
+                    var text = $.trim(tableItem.text())
+                    var value = tableItem.val()
+                    if (value) formItem.val(value)
+                    else formItem.val(text)
+                })
+                $('#form').submit()
+            })
+        </script>
     </body>
 </html>

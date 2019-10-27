@@ -68,6 +68,8 @@ class Database:
             dob, height, weight, addr1, addr2, phone1, phone2, email,
             medical_history, medications, family_hx, allergy, note, attachment
         ))
+
+        return patient_key
     
     @with_database
     def patient_update(self, cur, pkey, data):

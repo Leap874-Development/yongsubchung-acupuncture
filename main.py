@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, request, session, abort
+from datetime import datetime
 import json
 import database
 import secrets
@@ -39,6 +40,14 @@ def before_request():
         session['logged_in'] = False
         session['doctor'] = None
 
+@app.errorhandler(400)
+def page_not_found(error):
+    return render_template('error.html',
+        code=400,
+        message='Invalid request',
+        doctor=session['doctor']
+    ), 400
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('error.html',
@@ -47,14 +56,6 @@ def page_not_found(error):
         doctor=session['doctor']
     ), 404
 
-@app.errorhandler(500)
-def page_not_found(error):
-    return render_template('error.html',
-        code=500,
-        message='An internal server error occured',
-        doctor=session['doctor']
-    ), 500
-
 @app.errorhandler(405)
 def page_not_found(error):
     return render_template('error.html',
@@ -62,6 +63,14 @@ def page_not_found(error):
         message='Method not allowed',
         doctor=session['doctor']
     ), 405
+
+@app.errorhandler(500)
+def page_not_found(error):
+    return render_template('error.html',
+        code=500,
+        message='An internal server error occured',
+        doctor=session['doctor']
+    ), 500
 
 @app.route('/', methods=['GET'])
 def index():
@@ -131,12 +140,31 @@ def patient_new():
     if request.method == 'GET':
         return render_template('patient/new.html', doctor=session['doctor'])
     elif request.method == 'POST':
-        return 'unimplemented'
-        # doctor = request.values.get('doctor')
-        # password = request.values.get('password')
-        # redir = request.values.get('redirect')
+        first_name = request.values.get('first_name')
+        last_name = request.values.get('last_name')
+        dob = request.values.get('dob')
+        gender = request.values.get('gender')
+        if not first_name or not last_name: abort(400)
+        if gender not in ['m', 'f']: abort(400)
+        try: dob = datetime.strptime(dob, '%Y-%m-%d').date()
+        except ValueError: abort(400)
+        pkey = db.patient_add(last_name, first_name, gender, dob, **{
+            'height': request.values.get('height'),
+            'weight': request.values.get('weight'),
+            'addr1': request.values.get('addr1'),
+            'addr2': request.values.get('addr2'),
+            'phone1': request.values.get('phone1'),
+            'phone2': request.values.get('phone2'),
+            'email': request.values.get('email'),
+            'medical_history': request.values.get('medical_history'),
+            'family_hx': request.values.get('family_hx'),
+            'allergy': request.values.get('allergy'),
+            'note': request.values.get('note'),
+            'attachment': request.values.get('attachment')
+        })
+        return redirect('/patient/' + pkey)
     else:
-        abort(405)
+        abort(400)
 
 @app.route('/patient/<pkey>/edit', methods=['GET', 'POST'])
 @require_authentication
@@ -147,11 +175,18 @@ def patient_edit(pkey):
         else: patient = results[0]
         return render_template('patient/edit.html', doctor=session['doctor'], pkey=pkey, patient=patient)
     elif request.method == 'POST':
+        first_name = request.values.get('first_name')
+        last_name = request.values.get('last_name')
+        gender = request.values.get('gender')
+        dob = request.values.get('dob')
+        if not first_name or not last_name: abort(400)
+        if gender not in ['m', 'f']: abort(400)
+        try: dob = datetime.strptime(dob, '%Y-%m-%d').date()
+        except ValueError: abort(400)
         db.patient_update(pkey, {
-            'first_name': request.values.get('first_name'),
-            'last_name': request.values.get('last_name'),
-            'dob': request.values.get('dob'),
-            'gender': request.values.get('gender'),
+            'first_name': first_name,
+            'last_name': last_name,
+            'dob': dob, 'gender': gender,
             'height': request.values.get('height'),
             'weight': request.values.get('weight'),
             'addr1': request.values.get('addr1'),
