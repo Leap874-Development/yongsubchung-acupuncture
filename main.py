@@ -93,7 +93,8 @@ def home():
     if not query: query = ''
     users = db.patient_search_query(query)
     truncated = False
-    if len(users) > config['max_results']:
+    result_len = len(users)
+    if result_len > config['max_results']:
         users = users[:config['max_results']]
         truncated = True
     return render_template('home.html',
@@ -101,6 +102,7 @@ def home():
         query=query,
         users=users,
         truncated=truncated,
+        result_len=result_len,
         max_results=config['max_results']
     )
 
