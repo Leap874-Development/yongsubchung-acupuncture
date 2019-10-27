@@ -68,6 +68,17 @@ class Database:
             dob, height, weight, addr1, addr2, phone1, phone2, email,
             medical_history, medications, family_hx, allergy, note, attachment
         ))
+    
+    @with_database
+    def patient_update(self, cur, pkey, data):
+        middle = []
+        vals = []
+        for key in data:
+            middle.append('%s=?' % key)
+            vals.append(data[key])
+        query = 'UPDATE patient SET %s WHERE patient_key=?' % ', '.join(middle)
+        vals.append(pkey)
+        cur.execute(query, vals)
 
     @with_database    
     def patient_exists(self, cur, patient_key):

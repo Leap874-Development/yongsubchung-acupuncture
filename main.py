@@ -55,6 +55,14 @@ def page_not_found(error):
         doctor=session['doctor']
     ), 500
 
+@app.errorhandler(405)
+def page_not_found(error):
+    return render_template('error.html',
+        code=405,
+        message='Method not allowed',
+        doctor=session['doctor']
+    ), 405
+
 @app.route('/', methods=['GET'])
 def index():
     return redirect('/login')
@@ -75,6 +83,8 @@ def login():
             return redirect(redir)
         else:
             return redirect('login?err=1')
+    else:
+        abort(405)
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -107,7 +117,7 @@ def home():
         max_results=config['max_results']
     )
 
-@app.route('/patient/<pkey>')
+@app.route('/patient/<pkey>', methods=['GET'])
 @require_authentication
 def patient_detail(pkey):
     results = db.patient_search(patient_key=pkey)
@@ -115,18 +125,49 @@ def patient_detail(pkey):
     else: patient = results[0]
     return render_template('patient/view.html', doctor=session['doctor'], pkey=pkey, patient=patient)
 
-@app.route('/patient/new')
+@app.route('/patient/new', methods=['GET', 'POST'])
 @require_authentication
 def patient_new():
-    return render_template('patient/new.html', doctor=session['doctor'])
+    if request.method == 'GET':
+        return render_template('patient/new.html', doctor=session['doctor'])
+    elif request.method == 'POST':
+        return 'unimplemented'
+        # doctor = request.values.get('doctor')
+        # password = request.values.get('password')
+        # redir = request.values.get('redirect')
+    else:
+        abort(405)
 
-@app.route('/patient/<pkey>/edit')
+@app.route('/patient/<pkey>/edit', methods=['GET', 'POST'])
 @require_authentication
 def patient_edit(pkey):
-    results = db.patient_search(patient_key=pkey)
-    if len(results) != 1: abort(500)
-    else: patient = results[0]
-    return render_template('patient/edit.html', doctor=session['doctor'], pkey=pkey, patient=patient)
+    if request.method == 'GET':
+        results = db.patient_search(patient_key=pkey)
+        if len(results) != 1: abort(500)
+        else: patient = results[0]
+        return render_template('patient/edit.html', doctor=session['doctor'], pkey=pkey, patient=patient)
+    elif request.method == 'POST':
+        db.patient_update(pkey, {
+            'first_name': request.values.get('first_name'),
+            'last_name': request.values.get('last_name'),
+            'dob': request.values.get('dob'),
+            'gender': request.values.get('gender'),
+            'height': request.values.get('height'),
+            'weight': request.values.get('weight'),
+            'addr1': request.values.get('addr1'),
+            'addr2': request.values.get('addr2'),
+            'phone1': request.values.get('phone1'),
+            'phone2': request.values.get('phone2'),
+            'email': request.values.get('email'),
+            'medical_history': request.values.get('medical_history'),
+            'family_hx': request.values.get('family_hx'),
+            'allergy': request.values.get('allergy'),
+            'note': request.values.get('note'),
+            'attachment': request.values.get('attachment')
+        })
+        return redirect('/patient/' + pkey)
+    else:
+        abort(405)
 
 @app.route('/patient/<pkey>/new_visit')
 @require_authentication

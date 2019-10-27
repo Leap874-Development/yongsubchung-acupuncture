@@ -142,3 +142,24 @@ create table visit (
 	paid_check_by  VARCHAR(255),       -- Doctor(username) who received the fee.
 	note	text
 );
+
+-- 0  create_date
+-- 1  suffix
+-- 2  patient_key
+-- 3  last_name
+-- 4  first_name
+-- 5  gender
+-- 6  dob
+-- 7  height
+-- 8  weight
+-- 9  addr1
+-- 10 addr2
+-- 11 phone1
+-- 12 phone2
+-- 13 email
+-- 14 medical_history
+-- 15 medications
+-- 16 family_hx
+-- 17 allergy
+-- 18 note
+-- 19 attachment
