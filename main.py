@@ -12,9 +12,11 @@ app = Flask(__name__)
 db = database.Database('database.db')
 
 if config['debug']:
-    app.secret_key = secrets.token_hex(config['secret_length'])
-else:
     app.secret_key = 'super_secret_debug_key'
+    try: db.doctor_add('admin', 'password')
+    except database.DoctorExists: pass
+else:
+    app.secret_key = secrets.token_hex(config['secret_length'])
 
 def format_phone(raw):
     raw = str(raw)
