@@ -72,6 +72,11 @@ class Database:
         return patient_key
     
     @with_database
+    def patient_delete(self, cur, pkey):
+        query = 'DELETE FROM patient WHERE patient_key=?'
+        cur.execute(query, (pkey,))
+
+    @with_database
     def patient_update(self, cur, pkey, data):
         middle = []
         vals = []

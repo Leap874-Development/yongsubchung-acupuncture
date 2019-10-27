@@ -81,6 +81,13 @@
             
             <br/>
 
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" hidden>
+                <span id="alert-msg"></span>
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>                  
+
             <!-- PATIENT LIST -->
             <!-- TODO: sorting -->
             <div class="containter">
@@ -111,9 +118,18 @@
                 </table>
             </div>
         </div>
-
+    
         <script src="/static/js/popper.min.js"></script>
         <script src="/static/js/jquery-3.4.1.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
+
+        <script>
+            var params = new URLSearchParams(window.location.search)
+
+            if (params.has('alert')) {
+                $('#alert').attr('hidden', false)
+                $('#alert-msg').text(params.get('alert'))
+            }
+        </script>
     </body>
 </html>

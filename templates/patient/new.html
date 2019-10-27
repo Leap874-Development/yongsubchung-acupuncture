@@ -76,9 +76,7 @@
             <div class="row">
                 <h3>New Patient</h3>
                 <button type="button" id="save" class="ml-2 btn btn-success">Create</button>
-                <a href="/home">
-                    <button type="button" class="ml-2 btn btn-danger">Cancel</button>
-                </a>
+                <button type="button" id="cancel" class="ml-2 btn btn-danger">Cancel</button>
             </div>
 
             <br/>
@@ -207,6 +205,10 @@
                     else formItem.val(text)
                 })
                 $('#form').submit()
+            })
+
+            $('#cancel').click(() => {
+                window.location.href = '/home'
             })
         </script>
     </body>

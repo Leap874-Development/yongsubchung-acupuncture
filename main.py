@@ -126,14 +126,6 @@ def home():
         max_results=config['max_results']
     )
 
-@app.route('/patient/<pkey>', methods=['GET'])
-@require_authentication
-def patient_detail(pkey):
-    results = db.patient_search(patient_key=pkey)
-    if len(results) != 1: abort(500)
-    else: patient = results[0]
-    return render_template('patient/view.html', doctor=session['doctor'], pkey=pkey, patient=patient)
-
 @app.route('/patient/new', methods=['GET', 'POST'])
 @require_authentication
 def patient_new():
@@ -165,6 +157,18 @@ def patient_new():
         return redirect('/patient/' + pkey)
     else:
         abort(400)
+
+@app.route('/patient/<pkey>', methods=['GET'])
+@require_authentication
+def patient_detail(pkey):
+    results = db.patient_search(patient_key=pkey)
+    if len(results) != 1: abort(500)
+    else: patient = results[0]
+    return render_template('patient/view.html',
+        doctor=session['doctor'],
+        pkey=pkey,
+        patient=patient
+    )
 
 @app.route('/patient/<pkey>/edit', methods=['GET', 'POST'])
 @require_authentication
@@ -203,6 +207,12 @@ def patient_edit(pkey):
         return redirect('/patient/' + pkey)
     else:
         abort(405)
+
+@app.route('/patient/<pkey>/delete')
+@require_authentication
+def patient_delete(pkey):
+    db.patient_delete(pkey)
+    return redirect('/home?alert=Patient deleted')
 
 @app.route('/patient/<pkey>/new_visit')
 @require_authentication
