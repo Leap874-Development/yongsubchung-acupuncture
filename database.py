@@ -59,12 +59,13 @@ class Database:
                     attachment=None):
         
 
-        pkey_first = last_name[0].upper() + dob.strftime('%y%m%d')
+        create_date = datetime.date.today()
+        pkey_first = last_name[0].upper() + create_date.strftime('%y%m%d')
+
         query = 'SELECT COUNT(*) FROM patient WHERE patient_key LIKE ?'
         suffix = cur.execute(query, (pkey_first + '%',)).fetchone()[0]
 
         patient_key = pkey_first + str(suffix)
-        create_date = datetime.date.today()
 
         query = 'INSERT INTO patient VALUES (%s)' % ('?,' * 20)[:-1]
         cur.execute(query, (
