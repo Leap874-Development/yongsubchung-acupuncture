@@ -6,7 +6,7 @@ import faker
 
 db = database.Database('database.db')
 
-try: db.doctor_add('william', 'password')
+try: db.doctor_add('admin', 'password')
 except database.DoctorExists: pass
 
 # {

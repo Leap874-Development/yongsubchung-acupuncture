@@ -60,12 +60,12 @@ class Database:
         
 
         create_date = datetime.date.today()
-        pkey_first = last_name[0].upper() + create_date.strftime('%y%m%d')
+        pkey_date = create_date.strftime('%y%m%d')
 
         query = 'SELECT COUNT(*) FROM patient WHERE patient_key LIKE ?'
-        suffix = cur.execute(query, (pkey_first + '%',)).fetchone()[0]
+        suffix = cur.execute(query, ('%' + pkey_date + '%',)).fetchone()[0]
 
-        patient_key = pkey_first + str(suffix)
+        patient_key = last_name[0].upper() + pkey_date + str(suffix)
 
         query = 'INSERT INTO patient VALUES (%s)' % ('?,' * 20)[:-1]
         cur.execute(query, (
@@ -101,8 +101,8 @@ class Database:
     @with_database
     def patient_search(self, cur, **kwargs):
         query = 'SELECT * FROM patient WHERE ' 
-        query += ' AND '.join([ a + ' LIKE ?' for a in kwargs ])
-        values = [ '%'+kwargs[a]+'%' for a in kwargs ]
+        query += ' AND '.join([ a + '=?' for a in kwargs ])
+        values = [ kwargs[a] for a in kwargs ]
         resp = cur.execute(query, values).fetchall()
         return resp
     
