@@ -21,6 +21,15 @@
             height: 63px;
         }
 
+        .sortable {
+            cursor: pointer;
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
         .table-fixed {
             width: 150px;
         }
@@ -69,6 +78,8 @@
                 <form class="col-md-9" method="GET">
                     <div class="input-group">
                         <input type="text" class="form-control" name="query" placeholder="Search..." value="{{ query }}">
+                        <input type="hidden" name="sort_by" value="{{ sort_by }}">
+                        <input type="hidden" name="reverse" value="{{ reverse }}">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
@@ -94,7 +105,6 @@
             </div>
 
             <!-- PATIENT LIST -->
-            <!-- TODO: sorting -->
             <div class="containter">
                 {% if truncated %}
                     <p><i>results truncated ({{ result_len }} found, {{ max_results }} shown)</i></p>
@@ -102,9 +112,21 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th class="table-fixed" scope="col">Pkey</th>
-                            <th class="table-fixed" scope="col">First</th>
-                            <th class="table-fixed" scope="col">Last</th>
+                            <th id="header-pkey" class="table-fixed sortable" scope="col">
+                                <i class="{{ sort_data[0] }}"></i>
+                                Pkey
+                            </th>
+
+                            <th id="header-first" class="table-fixed sortable" scope="col">
+                                <i class="{{ sort_data[1] }}"></i>
+                                First
+                            </th>
+
+                            <th id="header-last" class="table-fixed sortable" scope="col">
+                                <i class="{{ sort_data[2] }}"></i>
+                                Last
+                            </th>
+
                             <th class="table-fixed" scope="col">DOB</th>
                             <th scope="col">Address</th>
                         </tr>
@@ -130,6 +152,37 @@
 
         <script>
             var params = new URLSearchParams(window.location.search)
+
+            var query = ''
+            var sort_by = 'patient_key'
+            var reverse = false
+
+            if (params.has('query')) query = params.get('query')
+            if (params.has('sort_by')) sort_by = params.get('sort_by')
+            if (params.has('reverse')) reverse = params.get('reverse') == 'true'
+
+            console.log('{{ sort_data }}')
+
+            $('#header-pkey').click(() => {
+                if (sort_by == 'patient_key') reverse = !reverse
+                else reverse = false
+                console.log(query, sort_by, reverse)
+                window.location.href = `/home?query=${query}&sort_by=patient_key&reverse=${reverse}`;
+            })
+
+            $('#header-first').click(() => {
+                if (sort_by == 'first_name') reverse = !reverse
+                else reverse = false
+                console.log(query, sort_by, reverse)
+                window.location.href = `/home?query=${query}&sort_by=first_name&reverse=${reverse}`;
+            })
+
+            $('#header-last').click(() => {
+                if (sort_by == 'last_name') reverse = !reverse
+                else reverse = false
+                console.log(query, sort_by, reverse)
+                window.location.href = `/home?query=${query}&sort_by=last_name&reverse=${reverse}`;
+            })
 
             if (params.has('alert')) {
                 $('#alert').attr('hidden', false)

@@ -113,29 +113,44 @@ def reports():
 def home():
     accepted_sort = ['patient_key', 'first_name', 'last_name']
 
+    icon_neutral = 'icon-angle-down'
+    icon_up = 'icon-caret-up'
+    icon_down = 'icon-caret-down'
+
     query = request.args.get('query')
     sort_by = request.args.get('sort_by')
     reverse = request.args.get('reverse') == 'true'
     if sort_by and sort_by not in accepted_sort:
         abort(400)
     else:
-        if not sort_by:
-            sort_by = 'first_name'
-            reverse = False
         if not query: query = ''
+        if not sort_by:
+            sort_by = 'patient_key'
+            reverse = False
+
+        sort_data = [icon_neutral] * 3
+        sort_direction = icon_down if reverse else icon_up
+        if sort_by == 'patient_key': sort_data[0] = sort_direction
+        if sort_by == 'first_name': sort_data[1] = sort_direction
+        if sort_by == 'last_name': sort_data[2] = sort_direction
+
         users = db.patient_search_query(query, sort_by=sort_by, reverse_sort=reverse)
         truncated = False
         result_len = len(users)
         if result_len > config['max_results']:
             users = users[:config['max_results']]
             truncated = True
+
     return render_template('home.html',
         doctor=session['doctor'],
         query=query,
         users=users,
         truncated=truncated,
         result_len=result_len,
-        max_results=config['max_results']
+        max_results=config['max_results'],
+        sort_data=sort_data,
+        sort_by=sort_by,
+        reverse=str(reverse).lower()
     )
 
 @app.route('/patient/new', methods=['GET', 'POST'])
