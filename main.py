@@ -111,14 +111,24 @@ def reports():
 @app.route('/home')
 @require_authentication
 def home():
+    accepted_sort = ['patient_key', 'first_name', 'last_name']
+
     query = request.args.get('query')
-    if not query: query = ''
-    users = db.patient_search_query(query)
-    truncated = False
-    result_len = len(users)
-    if result_len > config['max_results']:
-        users = users[:config['max_results']]
-        truncated = True
+    sort_by = request.args.get('sort_by')
+    reverse = request.args.get('reverse') == 'true'
+    if sort_by and sort_by not in accepted_sort:
+        abort(400)
+    else:
+        if not sort_by:
+            sort_by = 'first_name'
+            reverse = False
+        if not query: query = ''
+        users = db.patient_search_query(query, sort_by=sort_by, reverse_sort=reverse)
+        truncated = False
+        result_len = len(users)
+        if result_len > config['max_results']:
+            users = users[:config['max_results']]
+            truncated = True
     return render_template('home.html',
         doctor=session['doctor'],
         query=query,

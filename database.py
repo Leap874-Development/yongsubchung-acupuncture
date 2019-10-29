@@ -81,7 +81,7 @@ class Database:
         query = 'DELETE FROM patient WHERE patient_key=?'
         cur.execute(query, (pkey,))
 
-    # WARNING: data keywords must be trusted!
+    # WARNING: data keywords must be trusted
     @with_database
     def patient_update(self, cur, pkey, data):
         middle = []
@@ -99,7 +99,7 @@ class Database:
         count = cur.execute(query, (patient_key,)).fetchone()[0]
         return bool(count)
 
-    # WARNING: **kwargs must be trusted!
+    # WARNING: **kwargs must be trusted
     @with_database
     def patient_search(self, cur, **kwargs):
         query = 'SELECT * FROM patient WHERE '
@@ -108,19 +108,24 @@ class Database:
         resp = cur.execute(query, values).fetchall()
         return resp
     
+    # WARNING: columns and sort_by must be trusted
     @with_database
-    def patient_search_query(self, cur, search, columns=['first_name', 'last_name', 'phone1', 'phone2', 'email']):
+    def patient_search_query(self, cur, search,
+                             columns=['first_name', 'last_name', 'phone1', 'phone2', 'email'],
+                             sort_by='patient_key', reverse_sort=False):
+
         if len(search) < 3: search = ''
         query = 'SELECT * FROM patient WHERE '
         search = search.split()
-        concat = ' || " " || '.join(columns)
+        concat = ' || " " || '.join(columns) # sql injection
         values, params = [], []
         for item in search:
             for col in columns:
                 params.append(concat + ' LIKE ?')
                 values.append('%' + item + '%')
-        query += ' AND '.join(params)
-        if not len(params): query = 'SELECT * FROM patient'
+        desc = ' DESC' if reverse_sort else ''
+        query += ' AND '.join(params) + ' ORDER BY %s%s' % (sort_by, desc)
+        if not len(params): query = 'SELECT * FROM patient ORDER BY %s%s' % (sort_by, desc)
         resp = cur.execute(query, values).fetchall()
         return resp
 
