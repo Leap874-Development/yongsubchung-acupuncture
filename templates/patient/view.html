@@ -77,7 +77,7 @@
 
             <hr/>
 
-            <!-- HEADER -->
+            <!-- TOOLBAR -->
             <div class="row">
                 <!-- patient actions -->
                 <div class="col-md-9">
@@ -85,7 +85,7 @@
                         <h3>Patient {{ pkey }}</h3>
                         <div class="ml-2">
                             <a href="/patient/{{ pkey }}/edit">
-                                <button type="button" class="btn btn-secondary">Edit</button>
+                                <button type="button" class="btn btn-outline-primary">Edit</button>
                             </a>
                             <button type="button" id="delete" class="btn btn-danger" data-toggle="modal" data-target="#confirmation">Delete</button>
                         </div>
@@ -117,7 +117,7 @@
                             <p>This action is permentant, and cannot be undone</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
                             <a href="/patient/{{ pkey }}/delete">
                                 <button type="button" id="confirm-delete" class="btn btn-danger">Delete</button>
                             </a>
@@ -127,120 +127,122 @@
             </div>
 
             <!-- DATA TABLE -->
-            <table class="table table-bordered">
-                <tr>
-                    <th class="data-label">Fname</th>
-                    <td class="data-value data-3">
-                        {% if patient[4] %} {{ patient[4] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                    <th class="data-label">Lname</th>
-                    <td class="data-value data-3">
-                        {% if patient[3] %} {{ patient[3] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                    <th class="data-label">DOB</th>
-                    <td class="data-value data-3">
-                        {% if patient[6] %} {{ patient[6] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Gender</th>
-                    <td class="data-value">
-                        {% if patient[5] %} 
-                            {% if patient[5] == 'm' %}
-                                Male
+            <div>
+                <table class="table table-bordered">
+                    <tr>
+                        <th class="data-label">Fname</th>
+                        <td class="data-value data-3">
+                            {% if patient[4] %} {{ patient[4] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                        <th class="data-label">Lname</th>
+                        <td class="data-value data-3">
+                            {% if patient[3] %} {{ patient[3] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                        <th class="data-label">DOB</th>
+                        <td class="data-value data-3">
+                            {% if patient[6] %} {{ patient[6] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Gender</th>
+                        <td class="data-value">
+                            {% if patient[5] %} 
+                                {% if patient[5] == 'm' %}
+                                    Male
+                                {% else %}
+                                    Female
+                                {% endif %}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                        <th class="data-label">Height</th>
+                        <td class="data-value">
+                            {% if patient[7] %} {{ patient[7] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                        <th class="data-label">Weight</th>
+                        <td class="data-value">
+                            {% if patient[8] %} {{ patient[8] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Addr 1</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[9] %} {{ patient[9] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Addr 2</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[10] %} {{ patient[10] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Phone 1</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[11] %} {{ format_phone(patient[11]) }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Phone 2</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[12] %} {{ format_phone(patient[12]) }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Email</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[13] %} {{ patient[13] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">History</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[14] %} {{ patient[14] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Family HX</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[16] %} {{ patient[16] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Allergy</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[17] %} {{ patient[17] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Note</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[18] %} {{ patient[18] }}
+                            {% else %}<i>N/A</i>{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="data-label">Attachment</th>
+                        <td class="data-value" colspan="5">
+                            {% if patient[19] %}
+                                <a href="{{ patient[19] }}" target="__blank">{{ patient[19] }}</a>
                             {% else %}
-                                Female
+                                <i>N/A</i>
                             {% endif %}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                    <th class="data-label">Height</th>
-                    <td class="data-value">
-                        {% if patient[7] %} {{ patient[7] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                    <th class="data-label">Weight</th>
-                    <td class="data-value">
-                        {% if patient[8] %} {{ patient[8] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Addr 1</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[9] %} {{ patient[9] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Addr 2</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[10] %} {{ patient[10] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Phone 1</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[11] %} {{ format_phone(patient[11]) }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Phone 2</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[12] %} {{ format_phone(patient[12]) }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Email</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[13] %} {{ patient[13] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">History</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[14] %} {{ patient[14] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Family HX</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[16] %} {{ patient[16] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Allergy</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[17] %} {{ patient[17] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Note</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[18] %} {{ patient[18] }}
-                        {% else %}<i>N/A</i>{% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="data-label">Attachment</th>
-                    <td class="data-value" colspan="5">
-                        {% if patient[19] %}
-                            <a href="{{ patient[19] }}" target="__blank">{{ patient[19] }}</a>
-                        {% else %}
-                            <i>N/A</i>
-                        {% endif %}
-                    </td>
-                </tr>
-            </table>        
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <script src="/static/js/popper.min.js"></script>
