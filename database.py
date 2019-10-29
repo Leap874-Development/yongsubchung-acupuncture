@@ -114,8 +114,7 @@ class Database:
         query = 'SELECT * FROM patient WHERE '
         search = search.split()
         concat = ' || " " || '.join(columns)
-        values = []
-        params = []
+        values, params = [], []
         for item in search:
             for col in columns:
                 params.append(concat + ' LIKE ?')
