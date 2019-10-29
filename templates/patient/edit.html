@@ -76,9 +76,15 @@
 
             <!-- TITLE -->
             <div class="row">
-                <h3>Editing {{ pkey }}</h3>
-                <button type="button" id="save" class="ml-2 btn btn-success">Save</button>
-                <button type="button" id="cancel" class="ml-2 btn btn-danger">Cancel</button>
+                <div class="col-md-9 row">
+                    <h3>Editing {{ pkey }}</h3>
+                    <div class="ml-2">
+                        <button type="button" id="save" class="btn btn-success">Save</button>
+                        <a href="/patient/{{ pkey }}">
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <br/>
@@ -249,10 +255,6 @@
                     else formItem.val(text)
                 })
                 $('#form').submit()
-            })
-
-            $('#cancel').click(() => {
-                window.location.href = '/patient/{{ pkey }}';
             })
         </script>
     </body>
