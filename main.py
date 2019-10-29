@@ -13,8 +13,7 @@ db = database.Database('database.db')
 
 if config['debug']:
     app.secret_key = 'super_secret_debug_key'
-    try: db.doctor_add('admin', 'password')
-    except database.DoctorExists: pass
+    db.debug = True
 else:
     app.secret_key = secrets.token_hex(config['secret_length'])
 

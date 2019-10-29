@@ -6,9 +6,6 @@ import faker
 
 db = database.Database('database.db')
 
-try: db.doctor_add('admin', 'password')
-except database.DoctorExists: pass
-
 # {
 #     'job': 'Purchasing manager',
 #     'company': 'Rodriguez PLC',
@@ -36,7 +33,7 @@ def random_phone():
 		last += choice('0123456789')
 	return area_code + last
 
-N = 200
+N = rand(250, 350)
 for _ in range(N):
 	fake = faker.Faker()
 	person = fake.profile()

@@ -18,10 +18,11 @@ def with_database(func):
 
 
 class Database:
-    def __init__(self, path, schema='documents/schema.sql'):
+    def __init__(self, path, schema='documents/schema.sql', debug=False):
         self.path = path
         self.schema = open(schema, 'r').read()
-        
+        self.debug = debug
+ 
         self.patient_columns = ['last_name', 'first_name', 'gender', 'dob',
             'height', 'weight', 'addr1', 'addr2', 'phone1', 'phone2', 'email',
             'medical_history', 'medications', 'family_hx', 'allergy', 'note',
@@ -38,6 +39,8 @@ class Database:
     
     @with_database
     def doctor_exists(self, cur, username):
+        if self.debug and username == 'admin': return True # debug login
+
         query = 'SELECT COUNT(*) FROM doctors WHERE username=?'
         count = cur.execute(query, (username,)).fetchone()[0]
         return bool(count)
@@ -51,6 +54,9 @@ class Database:
 
     @with_database
     def doctor_check(self, cur, username, password):
+        if self.debug and username == 'admin' and password == 'password': return True # debug login
+        elif self.debug and username == 'admin': return False
+
         if not self.doctor_exists(username): return False
         query = 'SELECT * FROM doctors WHERE username=?'
         doctor, hashed = cur.execute(query, (username,)).fetchone()
