@@ -79,6 +79,7 @@
 
             <!-- HEADER -->
             <div class="row">
+                <!-- patient actions -->
                 <div class="col-md-9">
                     <div class="row">
                         <h3>Patient {{ pkey }}</h3>
@@ -91,6 +92,7 @@
                     </div>
                 </div>
 
+                <!-- visit actions -->
                 <div class="col-md-3">
                     <div class="float-right">
                         <a href="/patient/{{ pkey }}/new_visit"><button class="btn btn-success">Create New Visit</button></a>
@@ -101,6 +103,7 @@
 
             <br/>
 
+            <!-- DELETE CONFIRM -->
             <div class="modal fade" tabindex="-1" role="dialog" id="confirmation">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -237,31 +240,7 @@
                         {% endif %}
                     </td>
                 </tr>
-            </table>
-
-             <!--
-                0  create_date
-                1  suffix
-                2  patient_key
-                3  last_name
-                4  first_name
-                5  gender
-                6  dob
-                7  height
-                8  weight
-                9  addr1
-                10 addr2
-                11 phone1
-                12 phone2
-                13 email
-                14 medical_history
-                15 medications
-                16 family_hx
-                17 allergy
-                18 note
-                19 attachment
-            -->
-        
+            </table>        
         </div>
 
         <script src="/static/js/popper.min.js"></script>
