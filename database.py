@@ -4,6 +4,7 @@ import datetime
 
 class DoctorExists(Exception): pass
 class PatientNotFound(Exception): pass
+class InvalidColumn(Exception): pass
 
 def with_database(func):
     def wrapped(self, *args, **kwargs):
@@ -21,6 +22,11 @@ class Database:
         self.path = path
         self.schema = open(schema, 'r').read()
         
+        self.patient_columns = ['last_name', 'first_name', 'gender', 'dob',
+            'height', 'weight', 'addr1', 'addr2', 'phone1', 'phone2', 'email',
+            'medical_history', 'medications', 'family_hx', 'allergy', 'note',
+            'attachment', 'patient_key', 'suffix', 'create_date']
+
         conn = sqlite3.connect(path)
         cur = conn.cursor()
 
@@ -50,14 +56,12 @@ class Database:
         doctor, hashed = cur.execute(query, (username,)).fetchone()
         return security.check_password_hash(hashed, password)
 
-    # TODO: generate suffix
     @with_database
     def patient_add(self, cur, last_name, first_name, gender, dob,
                     height=None, weight=None, addr1=None, addr2=None,
                     phone1=None, phone2=None, email=None, medical_history=None,
                     medications=None, family_hx=None, allergy=None, note=None,
                     attachment=None):
-        
 
         create_date = datetime.date.today()
         pkey_date = create_date.strftime('%y%m%d')
@@ -87,6 +91,8 @@ class Database:
         middle = []
         vals = []
         for key in data:
+            if key not in self.patient_columns:
+                raise InvalidColumn()
             middle.append('%s=?' % key) # sql injection
             vals.append(data[key])
         query = 'UPDATE patient SET %s WHERE patient_key=?' % ', '.join(middle)
@@ -102,6 +108,9 @@ class Database:
     # WARNING: **kwargs must be trusted
     @with_database
     def patient_search(self, cur, **kwargs):
+        for key in kwargs:
+            if key not in self.patient_columns:
+                raise InvalidColumn()
         query = 'SELECT * FROM patient WHERE '
         query += ' AND '.join([ a + '=?' for a in kwargs ]) # sql injection
         values = [ kwargs[a] for a in kwargs ]
@@ -113,6 +122,12 @@ class Database:
     def patient_search_query(self, cur, search,
                              columns=['first_name', 'last_name', 'phone1', 'phone2', 'email'],
                              sort_by='patient_key', reverse_sort=False):
+
+        for col in columns:
+            if col not in self.patient_columns:
+                raise InvalidColumn()
+        if sort_by not in self.patient_columns:
+            raise InvalidColumn()
 
         if len(search) < 3: search = ''
         query = 'SELECT * FROM patient WHERE '
