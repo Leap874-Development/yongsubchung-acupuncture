@@ -113,14 +113,15 @@ class Database:
         if len(search) < 3: search = ''
         query = 'SELECT * FROM patient WHERE '
         search = search.split()
+        concat = ' || " " || '.join(columns)
         values = []
-        items = []
+        params = []
         for item in search:
             for col in columns:
-                items.append(col + ' LIKE ?')
+                params.append(concat + ' LIKE ?')
                 values.append('%' + item + '%')
-        query += ' OR '.join(items)
-        if not len(items): query = 'SELECT * FROM patient'
+        query += ' AND '.join(params)
+        if not len(params): query = 'SELECT * FROM patient'
         resp = cur.execute(query, values).fetchall()
         return resp
 
