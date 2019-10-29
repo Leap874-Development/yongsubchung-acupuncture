@@ -81,12 +81,13 @@ class Database:
         query = 'DELETE FROM patient WHERE patient_key=?'
         cur.execute(query, (pkey,))
 
+    # WARNING: data keywords must be trusted!
     @with_database
     def patient_update(self, cur, pkey, data):
         middle = []
         vals = []
         for key in data:
-            middle.append('%s=?' % key)
+            middle.append('%s=?' % key) # sql injection
             vals.append(data[key])
         query = 'UPDATE patient SET %s WHERE patient_key=?' % ', '.join(middle)
         vals.append(pkey)
@@ -98,10 +99,11 @@ class Database:
         count = cur.execute(query, (patient_key,)).fetchone()[0]
         return bool(count)
 
+    # WARNING: **kwargs must be trusted!
     @with_database
     def patient_search(self, cur, **kwargs):
-        query = 'SELECT * FROM patient WHERE ' 
-        query += ' AND '.join([ a + '=?' for a in kwargs ])
+        query = 'SELECT * FROM patient WHERE '
+        query += ' AND '.join([ a + '=?' for a in kwargs ]) # sql injection
         values = [ kwargs[a] for a in kwargs ]
         resp = cur.execute(query, values).fetchall()
         return resp

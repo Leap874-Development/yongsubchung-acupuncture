@@ -20,6 +20,10 @@
             height: 63px;
         }
 
+        .table-fixed {
+            width: 150px;
+        }
+
         .breadcrumb-transparent {
             background-color: transparent;
         }
@@ -97,10 +101,10 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Pkey</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">DOB</th>
+                            <th class="table-fixed" scope="col">Pkey</th>
+                            <th class="table-fixed" scope="col">First</th>
+                            <th class="table-fixed" scope="col">Last</th>
+                            <th class="table-fixed" scope="col">DOB</th>
                             <th scope="col">Address</th>
                         </tr>
                     </thead>
@@ -111,7 +115,7 @@
                                 <td>{{ user[4] }}</td>
                                 <td>{{ user[3] }}</td>
                                 <td>{{ user[6] }}</td>
-                                <td>{{ user[9] }}</td>
+                                <td>{{ user[9] }}, {{ user[10] }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
