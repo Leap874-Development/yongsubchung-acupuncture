@@ -38,7 +38,7 @@ create table patient (
 
 create table visit (
 	-- BOTH TYPES
-	visit_fkey			TEXT NOT NULL UNIQUE,	-- Auto
+	visit_pkey			TEXT NOT NULL UNIQUE,	-- Auto
 	suffix				INTEGER NOT NULL,		-- Auto
 	new_visit			BOOLEAN NOT NULL,
 	patient_pkey		TEXT NOT NULL,

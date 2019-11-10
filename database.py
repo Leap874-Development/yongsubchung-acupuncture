@@ -174,19 +174,31 @@ class Database:
                   women_miscarriage=None, women_leukorrhea=None,
                   women_birth_control=None, women_menstruation=None):
 
-
         visit_date = datetime.date.today()
         pkey_date = visit_date.strftime('%y%m%d')
 
-        query = 'SELECT COUNT(*) FROM visit WHERE visit_fkey LIKE ?'
+        query = 'SELECT COUNT(*) FROM visit WHERE visit_pkey LIKE ?'
         suffix = cur.execute(query, ('%' + pkey_date + '%',)).fetchone()[0]
 
-        patient_pkey = last_name[0].upper() + pkey_date + str(suffix)
-
-        visit_fkey = None
-        visit_date = None
+        visit_pkey = patient_pkey[0].upper() + pkey_date + str(suffix)
 
         if not self.patient_exists(patient_pkey):
             raise PatientNotFound()
         
-        visit_date = datetime.date.today()
+        query = 'INSERT INTO patient VALUES (%s)' % ('?,' * 66)[:-1]
+        cur.execute(query, (
+            visit_pkey, suffix, new_visit, patient_pkey, doctor, visit_date,
+            temperature, heart_rate, blood_pressure_h, blood_pressure_l,
+            chief_complaint, present_illness, exam_pulse_l, exam_pulse_r,
+            exam_sleep, exam_tongue, tcm_diag_1, tcm_diag_2, tcm_diag_3,
+            tcm_diag_4, treat_principle, acu_points, moxa, cupping, eacu,
+            auricular, condition_treated, fee, paid, paid_check_by, note,
+            feedback, exam_appetite, exam_digest, exam_bm, location, onset,
+            provocation, palliation, quality, region, severity, frequency,
+            timing, possible_cause, remark, tq_fever, tq_perspiration,
+            tq_thirst, tq_appetite, tq_digestion, tq_taste, tq_bm, exam_urine,
+            exam_pain, exam_consciousness, exam_energy_level, exam_stress_level,
+            women_menarche, women_menopause, women_num_pregnant,
+            women_num_child, women_miscarriage, women_leukorrhea,
+            women_birth_control, women_menstruation
+        ))
