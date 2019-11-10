@@ -151,74 +151,9 @@ class Database:
         return resp
 
     @with_database
-    def visit_add(self, cur, patient_key, doctor, temperature=None,
-                  heart_rate=None, blood_pressure_h=None, blood_pressure_l=None,
-                  chief_complaint=None, present_illness=None, feedback=None,
-                  exam_appetite=None, exam_digest=None, exam_bm=None,
-                  exam_sleep=None, exam_tongue=None, exam_pulse_l=None,
-                  exam_pulse_r=None, tcm_diag_1=None, tcm_diag_2=None,
-                  tcm_diag_3=None, tcm_diag_4=None, treat_principle=None,
-                  acu_points=None, moxa=None, cupping=None, eacu=None,
-                  arricular=None, condition_treated=None, fee=None, paid=None, 
-                  paid_check_by=None, note=None): 
+    def visit_add(self, cur, ):
         
         if not self.patient_exists(patient_key):
             raise PatientNotFound()
         
         visit_date = datetime.date.today()
-
-        query = 'INSERT INTO visit VALUES (%s)' % ('?,' * 32)[:-1]
-        cur.execute(query, (
-            patient_key, doctor, visit_date, temperature, heart_rate,
-            blood_pressure_h, blood_pressure_l, chief_complaint,
-            present_illness, feedback, exam_appetite, exam_digest, exam_bm,
-            exam_sleep, exam_tongue, exam_pulse_l, exam_pulse_r, tcm_diag_1,
-            tcm_diag_2, tcm_diag_3, tcm_diag_4, treat_principle, acu_points,
-            moxa, cupping, eacu, arricular, condition_treated, fee, paid,
-            paid_check_by, note
-        ))
-    
-    @with_database
-    def new_visit_add(self, cur, patient_key, doctor, temperature=None,
-                      heart_rate=None, blood_pressure_h=None,
-                      blood_pressure_l=None, chief_complaint=None,
-                      location=None, onset=None, provocation=None,
-                      palliation=None, quality=None, region=None, severity=None,
-                      frequency=None, timing=None, possible_cause=None,
-                      remark=None, present_illness=None, tq_fever=None,
-                      tq_perspiration=None, tq_thirst=None, tq_appetite=None,
-                      tq_digestion=None, tq_taste=None, tq_bm=None,
-                      exam_urine=None, exam_sleep=None, exam_pain=None,
-                      exam_consciousness=None, exam_energy_level=None,
-                      exam_stress_level=None, exam_pulse_l=None,
-                      exam_pulse_r=None, women_menarche=None,
-                      women_menopause=None, women_num_pregnant=None,
-                      women_num_child=None, women_miscarriage=None,
-                      women_leukorrhea=None, women_birth_control=None,
-                      women_menstruation=None, tcm_diag_1=None, tcm_diag_2=None,
-                      tcm_diag_3=None, tcm_diag_4=None, treat_principle=None,
-                      acu_points=None, moxa=None, cupping=None, eacu=None,
-                      auricular=None, condition_treated=None, fee=None,
-                      paid=None, paid_check_by=None, note=None):
-
-        if not self.patient_exists(patient_key):
-            raise PatientNotFound()
-        
-        visit_date = datetime.date.today()
-
-        query = 'INSERT INTO visit VALUES (%s)' % ('?,' * 58)[:-1]
-        cur.execute(query, (
-            patient_key, doctor, visit_date, temperature, heart_rate,
-            blood_pressure_h, blood_pressure_l, chief_complaint, location,
-            onset, provocation, palliation, quality, region, severity,
-            frequency, timing, possible_cause, remark, present_illness,
-            tq_fever, tq_perspiration, tq_thirst, tq_appetite, tq_digestion,
-            tq_taste, tq_bm, exam_urine, exam_sleep, exam_pain,
-            exam_consciousness, exam_energy_level, exam_stress_level,
-            exam_pulse_l, exam_pulse_r, women_menarche, women_menopause,
-            women_num_pregnant, women_num_child, women_miscarriage,
-            women_leukorrhea, women_birth_control, women_menstruation,
-            tcm_diag_1, tcm_diag_2, tcm_diag_3, tcm_diag_4, treat_principle,
-            acu_points, moxa, cupping, auricular, condition_treated, fee, paid,
-            paid_check_by, note
-        ))
