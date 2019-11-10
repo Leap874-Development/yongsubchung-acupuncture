@@ -110,7 +110,7 @@ def reports():
 @app.route('/home')
 @require_authentication
 def home():
-    accepted_sort = ['patient_key', 'first_name', 'last_name']
+    accepted_sort = ['patient_pkey', 'first_name', 'last_name']
 
     icon_neutral = 'icon-angle-down'
     icon_up = 'icon-caret-up'
@@ -124,12 +124,12 @@ def home():
     else:
         if not query: query = ''
         if not sort_by:
-            sort_by = 'patient_key'
+            sort_by = 'patient_pkey'
             reverse = False
 
         sort_data = [icon_neutral] * 3
         sort_direction = icon_down if reverse else icon_up
-        if sort_by == 'patient_key': sort_data[0] = sort_direction
+        if sort_by == 'patient_pkey': sort_data[0] = sort_direction
         if sort_by == 'first_name': sort_data[1] = sort_direction
         if sort_by == 'last_name': sort_data[2] = sort_direction
 
@@ -187,7 +187,7 @@ def patient_new():
 @app.route('/patient/<pkey>', methods=['GET'])
 @require_authentication
 def patient_detail(pkey):
-    results = db.patient_search(patient_key=pkey)
+    results = db.patient_search(patient_pkey=pkey)
     if len(results) != 1: abort(500)
     else: patient = results[0]
     return render_template('patient/view.html',
@@ -200,7 +200,7 @@ def patient_detail(pkey):
 @require_authentication
 def patient_edit(pkey):
     if request.method == 'GET':
-        results = db.patient_search(patient_key=pkey)
+        results = db.patient_search(patient_pkey=pkey)
         if len(results) != 1: abort(500)
         else: patient = results[0]
         return render_template('patient/edit.html', doctor=session['doctor'], pkey=pkey, patient=patient)

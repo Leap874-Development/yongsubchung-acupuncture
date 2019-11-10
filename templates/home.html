@@ -160,7 +160,7 @@
             var params = new URLSearchParams(window.location.search)
 
             var query = ''
-            var sort_by = 'patient_key'
+            var sort_by = 'patient_pkey'
             var reverse = false
 
             if (params.has('query')) query = params.get('query')
@@ -170,10 +170,10 @@
             console.log('{{ sort_data }}')
 
             $('#header-pkey').click(() => {
-                if (sort_by == 'patient_key') reverse = !reverse
+                if (sort_by == 'patient_pkey') reverse = !reverse
                 else reverse = false
                 console.log(query, sort_by, reverse)
-                window.location.href = `/home?query=${query}&sort_by=patient_key&reverse=${reverse}`;
+                window.location.href = `/home?query=${query}&sort_by=patient_pkey&reverse=${reverse}`;
             })
 
             $('#header-first').click(() => {

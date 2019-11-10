@@ -26,7 +26,7 @@ class Database:
         self.patient_columns = ['last_name', 'first_name', 'gender', 'dob',
             'height', 'weight', 'addr1', 'addr2', 'phone1', 'phone2', 'email',
             'medical_history', 'medications', 'family_hx', 'allergy', 'note',
-            'attachment', 'patient_key', 'suffix', 'create_date']
+            'attachment', 'patient_pkey', 'suffix', 'create_date']
 
         conn = sqlite3.connect(path)
         cur = conn.cursor()
@@ -72,23 +72,23 @@ class Database:
         create_date = datetime.date.today()
         pkey_date = create_date.strftime('%y%m%d')
 
-        query = 'SELECT COUNT(*) FROM patient WHERE patient_key LIKE ?'
+        query = 'SELECT COUNT(*) FROM patient WHERE patient_pkey LIKE ?'
         suffix = cur.execute(query, ('%' + pkey_date + '%',)).fetchone()[0]
 
-        patient_key = last_name[0].upper() + pkey_date + str(suffix)
+        patient_pkey = last_name[0].upper() + pkey_date + str(suffix)
 
         query = 'INSERT INTO patient VALUES (%s)' % ('?,' * 20)[:-1]
         cur.execute(query, (
-            create_date, suffix, patient_key, last_name, first_name, gender,
+            create_date, suffix, patient_pkey, last_name, first_name, gender,
             dob, height, weight, addr1, addr2, phone1, phone2, email,
             medical_history, medications, family_hx, allergy, note, attachment
         ))
 
-        return patient_key
+        return patient_pkey
     
     @with_database
     def patient_delete(self, cur, pkey):
-        query = 'DELETE FROM patient WHERE patient_key=?'
+        query = 'DELETE FROM patient WHERE patient_pkey=?'
         cur.execute(query, (pkey,))
 
     # WARNING: data keywords must be trusted
@@ -101,14 +101,14 @@ class Database:
                 raise InvalidColumn()
             middle.append('%s=?' % key) # sql injection
             vals.append(data[key])
-        query = 'UPDATE patient SET %s WHERE patient_key=?' % ', '.join(middle)
+        query = 'UPDATE patient SET %s WHERE patient_pkey=?' % ', '.join(middle)
         vals.append(pkey)
         cur.execute(query, vals)
 
     @with_database    
-    def patient_exists(self, cur, patient_key):
-        query = 'SELECT COUNT(*) FROM patient WHERE patient_key=?'
-        count = cur.execute(query, (patient_key,)).fetchone()[0]
+    def patient_exists(self, cur, patient_pkey):
+        query = 'SELECT COUNT(*) FROM patient WHERE patient_pkey=?'
+        count = cur.execute(query, (patient_pkey,)).fetchone()[0]
         return bool(count)
 
     # WARNING: **kwargs must be trusted
@@ -126,8 +126,9 @@ class Database:
     # WARNING: columns and sort_by must be trusted
     @with_database
     def patient_search_query(self, cur, search,
-                             columns=['first_name', 'last_name', 'phone1', 'phone2', 'email'],
-                             sort_by='patient_key', reverse_sort=False):
+                             columns=['first_name', 'last_name', 'phone1',
+                             'phone2', 'email'], sort_by='patient_pkey',
+                             reverse_sort=False):
 
         for col in columns:
             if col not in self.patient_columns:
@@ -151,9 +152,41 @@ class Database:
         return resp
 
     @with_database
-    def visit_add(self, cur, ):
-        
-        if not self.patient_exists(patient_key):
+    def visit_add(self, cur, new_visit, patient_pkey, doctor, temperature=None,
+                  heart_rate=None, blood_pressure_h=None, blood_pressure_l=None,
+                  chief_complaint=None, present_illness=None, exam_pulse_l=None,
+                  exam_pulse_r=None, exam_sleep=None, exam_tongue=None,
+                  tcm_diag_1=None, tcm_diag_2=None, tcm_diag_3=None,
+                  tcm_diag_4=None, treat_principle=None, acu_points=None,
+                  moxa=None, cupping=None, eacu=None, auricular=None,
+                  condition_treated=None, fee=None, paid=None,
+                  paid_check_by=None, note=None, feedback=None,
+                  exam_appetite=None, exam_digest=None, exam_bm=None,
+                  location=None, onset=None, provocation=None, palliation=None,
+                  quality=None, region=None, severity=None, frequency=None,
+                  timing=None, possible_cause=None, remark=None, tq_fever=None,
+                  tq_perspiration=None, tq_thirst=None, tq_appetite=None,
+                  tq_digestion=None, tq_taste=None, tq_bm=None, exam_urine=None,
+                  exam_pain=None, exam_consciousness=None,
+                  exam_energy_level=None, exam_stress_level=None,
+                  women_menarche=None, women_menopause=None,
+                  women_num_pregnant=None, women_num_child=None,
+                  women_miscarriage=None, women_leukorrhea=None,
+                  women_birth_control=None, women_menstruation=None):
+
+
+        visit_date = datetime.date.today()
+        pkey_date = visit_date.strftime('%y%m%d')
+
+        query = 'SELECT COUNT(*) FROM visit WHERE visit_fkey LIKE ?'
+        suffix = cur.execute(query, ('%' + pkey_date + '%',)).fetchone()[0]
+
+        patient_pkey = last_name[0].upper() + pkey_date + str(suffix)
+
+        visit_fkey = None
+        visit_date = None
+
+        if not self.patient_exists(patient_pkey):
             raise PatientNotFound()
         
         visit_date = datetime.date.today()

@@ -16,7 +16,7 @@ create table doctors (
 create table patient (
 	create_date		DATE NOT NULL,			-- Auto
 	suffix			INTEGER NOT NULL,		-- Auto
-	patient_key		TEXT NOT NULL UNIQUE,	-- Auto
+	patient_pkey	TEXT NOT NULL UNIQUE,	-- Auto
 	last_name		TEXT NOT NULL,
 	first_name		TEXT NOT NULL,
 	gender			TEXT NOT NULL,
@@ -38,11 +38,12 @@ create table patient (
 
 create table visit (
 	-- BOTH TYPES
-	visit_fkey			TEXT NOT NULL UNIQUE,
+	visit_fkey			TEXT NOT NULL UNIQUE,	-- Auto
+	suffix				INTEGER NOT NULL,		-- Auto
 	new_visit			BOOLEAN NOT NULL,
-	patient_fkey		TEXT NOT NULL,
+	patient_pkey		TEXT NOT NULL,
 	doctor				TEXT NOT NULL,
-	visit_date			DATE NOT NULL,	-- Auto
+	visit_date			DATE NOT NULL,			-- Auto
 	temperature			REAL,
 	heart_rate			REAL,
 	blood_pressure_h	INTEGER,
