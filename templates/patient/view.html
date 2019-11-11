@@ -38,6 +38,10 @@
             width: calc(70% / 3);
         }
 
+        .data-2 {
+            width: calc(70% / 2);
+        }
+
         a:hover {
             text-decoration: none;
         }
@@ -95,15 +99,14 @@
                 <!-- visit actions -->
                 <div class="col-md-3">
                     <div class="float-right">
-                        <a href="/patient/{{ pkey }}/new_visit"><button class="btn btn-success">Create New Visit</button></a>
-                        <a href="/patient/{{ pkey }}/return_visit"><button class="btn btn-secondary">Create Visit</button></a>
+                        <button type="button" data-toggle="modal" data-target="#new-visit" class="btn btn-success">New Visit</button>
                     </div>
                 </div>
             </div>
 
             <br/>
 
-            <!-- DELETE CONFIRM -->
+            <!-- DELETE CONFIRM MODAL -->
             <div class="modal fade" tabindex="-1" role="dialog" id="confirmation">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -121,6 +124,121 @@
                             <a href="/patient/{{ pkey }}/delete">
                                 <button type="button" id="confirm-delete" class="btn btn-danger">Delete</button>
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW VISIT MODAL -->
+            <div class=" modal fade" id="new-visit" tabindex="-1">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Visit</h5>
+                        </div>
+
+                        <div class="modal-body">
+                            <h6>{{ pkey }}</h6>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="data-label">Fname</th>
+                                    <td class="data-value data-3">
+                                        {% if patient[4] %} {{ patient[4] }}
+                                        {% else %}<i>N/A</i>{% endif %}
+                                    </td>
+                                    <th class="data-label">Lname</th>
+                                    <td class="data-value data-3">
+                                        {% if patient[3] %} {{ patient[3] }}
+                                        {% else %}<i>N/A</i>{% endif %}
+                                    </td>
+                                    <th class="data-label">DOB</th>
+                                    <td class="data-value data-3">
+                                        {% if patient[6] %} {{ patient[6] }}
+                                        {% else %}<i>N/A</i>{% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="data-label">Gender</th>
+                                    <td class="data-value">
+                                        {% if patient[5] %} 
+                                            {% if patient[5] == 'm' %}
+                                                Male
+                                            {% else %}
+                                                Female
+                                            {% endif %}
+                                        {% else %}<i>N/A</i>{% endif %}
+                                    </td>
+                                    <th class="data-label">Height</th>
+                                    <td class="data-value">
+                                        {% if patient[7] %} {{ patient[7] }}
+                                        {% else %}<i>N/A</i>{% endif %}
+                                    </td>
+                                    <th class="data-label">Weight</th>
+                                    <td class="data-value">
+                                        {% if patient[8] %} {{ patient[8] }}
+                                        {% else %}<i>N/A</i>{% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h6>Intake Form</h6>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="data-label">Temp</th>
+                                    <td class="data-value data-3"></td>
+
+                                    <th class="data-label">Blood</th>
+                                    <td class="data-value data-3"></td>
+
+                                    <th class="data-label">Heart</th>
+                                    <td class="data-value data-3"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Complaint</th>
+                                    <td class="data-value" colspan="5"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Location</th>
+                                    <td class="data-value"></td>
+
+                                    <th class="data-label">Onset</th>
+                                    <td class="data-value data-2" colspan="3"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Provocation</th>
+                                    <td class="data-value"></td>
+
+                                    <th class="data-label">Palliation</th>
+                                    <td class="data-value data-2" colspan="3"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Quality</th>
+                                    <td class="data-value"></td>
+
+                                    <th class="data-label">Region</th>
+                                    <td class="data-value data-2" colspan="3"></td>
+                                </tr>
+    
+                                <tr>
+                                    <th class="data-label">Severity</th>
+                                    <td class="data-value"></td>
+
+                                    <th class="data-label">Frequency</th>
+                                    <td class="data-value data-2" colspan="3"></td>
+                                </tr>
+    
+                                <tr>
+                                    <th class="data-label">Timing</th>
+                                    <td class="data-value"></td>
+
+                                    <th class="data-label">P. Cause</th>
+                                    <td class="data-value data-2" colspan="3"></td>
+                                </tr>    
+                            </table>
                         </div>
                     </div>
                 </div>

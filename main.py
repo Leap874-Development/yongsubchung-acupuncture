@@ -240,15 +240,20 @@ def patient_delete(pkey):
     db.patient_delete(pkey)
     return redirect('/home?alert=Patient deleted')
 
-@app.route('/patient/<pkey>/new_visit')
+@app.route('/visit/<pkey>')
 @require_authentication
-def patient_new_visit(pkey):
-    return render_template('patient/new_visit.html', doctor=session['doctor'], pkey=pkey)
+def visit_detail(pkey):
+    return 'ok'
 
-@app.route('/patient/<pkey>/return_visit')
+@app.route('/visit/<pkey>/edit')
 @require_authentication
-def patient_return_visit(pkey):
-    return render_template('patient/return_visit.html', doctor=session['doctor'], pkey=pkey)
+def visit_edit(pkey):
+    return 'ok'
+
+@app.route('/visit/<pkey>/delete')
+@require_authentication
+def visit_delete(pkey):
+    return 'ok'
 
 app.run(
     debug=config['debug'],
