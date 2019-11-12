@@ -25,13 +25,34 @@
             background-color: transparent;
         }
 
+        .data-label-top {
+            width: 0%;
+            text-align: center;
+            white-space: nowrap;
+        }
+
         .data-label {
-            width: 10%;
+            width: 0%;
             text-align: right;
+            white-space: nowrap;
+        }
+
+        .data-label-lg {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .data-checkbox {
+            width: 20px;
+            height: 20px;
         }
 
         .data-value {
             text-align: left;
+        }
+
+        .data-4 {
+            width: calc(70% / 4);
         }
 
         .data-3 {
@@ -339,6 +360,97 @@
 
                                     <th class="data-label">Pulse R</th>
                                     <td class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                </tr>
+                            </table>
+
+                            {% if patient[5] == 'f' %}
+                                <h6>Women Only</h6>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="data-label">Menarche</th>
+                                        <td class="data-value data-4" contenteditable="true"></td>
+
+                                        <th class="data-label">Menopause</th>
+                                        <td class="data-value data-4" contenteditable="true"></td>
+
+                                        <th class="data-label">Pregnancies</th>
+                                        <td class="data-value data-4" contenteditable="true"></td>
+
+                                        <th class="data-label">Children</th>
+                                        <td class="data-value data-4" contenteditable="true"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="data-label">Miscarriage</th>
+                                        <td class="data-value data-4" contenteditable="true"></td>
+
+                                        <th class="data-label">Leukorrhea</th>
+                                        <td class="data-value data-4" contenteditable="true"></td>
+
+                                        <th class="data-label">Birth Control</th>
+                                        <td class="data-value data-4" contenteditable="true" colspan="3"></td>                
+                                    </tr>
+                                </table>
+                            {% endif %}
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="data-label-top">TCM Diagnosis</th>
+                                    <th class="data-label-top">Treatment Principle</th>
+                                    <th class="data-label-top">Acupuncture Points</th>
+                                </tr>
+
+                                <tr>
+                                    <td class="data-value" contenteditable="true"></td>
+                                    <td class="data-value" contenteditable="true" rowspan="4"></td>
+                                    <td class="data-value" contenteditable="true" rowspan="4"></td>
+                                </tr>
+
+                                <tr><td class="data-value" contenteditable="true"></td></tr>
+                                <tr><td class="data-value" contenteditable="true"></td></tr>
+                                <tr><td class="data-value" contenteditable="true"></td></tr>
+                            </table>
+
+                            <h6>Other Treatment</h6>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="data-label">Moxa</th>
+                                    <td class="data-value data-3"><input type="checkbox" class="data-checkbox"></td>
+
+                                    <th class="data-label">Cupping</th>
+                                    <td class="data-value data-3"><input type="checkbox" class="data-checkbox"></td>
+
+                                    <th class="data-label">Electro Acupuncture</th>
+                                    <td class="data-value data-3"><input type="checkbox" class="data-checkbox"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Auricular</th>
+                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Condition Treated</th>
+                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+                            </table>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="data-label data-label-lg">Fee</th>
+                                    <td class="data-value data-2" contenteditable="true"></td>
+
+                                    <th class="data-label data-label-lg">Paid</th>
+                                    <td class="data-value data-2">
+                                        <input type="checkbox" class="data-checkbox">
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="data-label">Note</th>
+                                    <td class="data-value" contenteditable="true" style="width: 100%"></td>
                                 </tr>
                             </table>
                         </div>
