@@ -237,7 +237,109 @@
 
                                     <th class="data-label">P. Cause</th>
                                     <td class="data-value data-2" colspan="3" contenteditable="true"></td>
-                                </tr>    
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Remarks</th>
+                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">P. Illness</th>
+                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">History</th>
+                                    <td class="data-value" colspan="5" contenteditable="true">
+                                        {% if patient[14] %}{{ patient[14] }}{% endif %}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Medications</th>
+                                    <td class="data-value" colspan="5" contenteditable="true">
+                                        {% if patient[15] %}{{ patient[15] }}{% endif %}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Family HX</th>
+                                    <td class="data-value" colspan="5" contenteditable="true">
+                                        {% if patient[16] %}{{ patient[16] }}{% endif %}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Allergy</th>
+                                    <td class="data-value" colspan="5" contenteditable="true">
+                                        {% if patient[17] %}{{ patient[17] }}{% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <h6>Ten Questions and ROS</h6>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="data-label">Fever</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+
+                                    <th class="data-label">Perspiration</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+
+                                    <th class="data-label">Thirst</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Appetite</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+
+                                    <th class="data-label">Digestion</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+
+                                    <th class="data-label">Taste</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Urine</th>
+                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Sleep</th>
+                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+    
+                                <tr>
+                                    <th class="data-label">Pain</th>
+                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Tongue</th>
+                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Consciousness</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+
+                                    <th class="data-label">Energy</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+
+                                    <th class="data-label">Stress</th>
+                                    <td class="data-value data-3" contenteditable="true"></td>
+                                </tr>
+
+                                <tr>
+                                    <th class="data-label">Pulse L</th>
+                                    <td class="data-value data-2" contenteditable="true"></td>
+
+                                    <th class="data-label">Pulse R</th>
+                                    <td class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                </tr>
                             </table>
                         </div>
                     </div>
