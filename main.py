@@ -184,17 +184,50 @@ def patient_new():
     else:
         abort(400)
 
-@app.route('/patient/<pkey>', methods=['GET'])
+@app.route('/patient/<pkey>', methods=['GET', 'POST'])
 @require_authentication
 def patient_detail(pkey):
-    results = db.patient_search(patient_pkey=pkey)
-    if len(results) != 1: abort(500)
-    else: patient = results[0]
-    return render_template('patient/view.html',
-        doctor=session['doctor'],
-        pkey=pkey,
-        patient=patient
-    )
+    if request.method == 'GET':
+        results = db.patient_search(patient_pkey=pkey)
+        if len(results) != 1: abort(500)
+        else: patient = results[0]
+        return render_template('patient/view.html',
+            doctor=session['doctor'],
+            pkey=pkey,
+            patient=patient
+        )
+    elif request.method == 'POST':
+        visit_keys = [
+            'temperature', 'blood_pressure_l', 'blood_pressure_h', 'heart_rate',
+            'chief_complaint', 'location', 'onset', 'provocation', 'palliation',
+            'quality', 'region', 'severity', 'frequency', 'timing',
+            'possible_cause', 'remark', 'present_illness', 'tq_fever',
+            'tq_perspiration', 'tq_thirst', 'tq_appetite', 'tq_digestion',
+            'tq_taste', 'tq_bm', 'exam_urine', 'exam_sleep', 'exam_pain',
+            'exam_tongue', 'exam_consciousness', 'exam_energy_level',
+            'exam_stress_level', 'exam_pulse_l', 'exam_pulse_r', 'tcm_diag_1',
+            'treat_principle', 'acu_points', 'tcm_diag_2', 'tcm_diag_3',
+            'tcm_diag_4', 'moxa', 'cupping', 'eacu', 'auricular',
+            'condition_treated', 'fee', 'paid', 'note'
+        ]
+
+        patient_keys = [
+            'medical_history', 'medications', 'family_hx', 'allergy'
+        ]
+
+        visit_data, patient_data = {}, {}
+        for key in visit_keys: visit_data[key] = request.values.get(key)
+        for key in patient_keys: patient_data[key] = request.values.get(key)
+
+        new_visit = request.values.get('new_visit')
+        doctor = session['doctor']
+
+        db.patient_update(pkey, patient_data)
+        db.visit_add(new_visit, pkey, doctor, **visit_data)
+
+        return redirect('/patient/' + pkey)
+    else:
+        abort(405)
 
 @app.route('/patient/<pkey>/edit', methods=['GET', 'POST'])
 @require_authentication

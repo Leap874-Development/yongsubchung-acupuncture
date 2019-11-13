@@ -185,7 +185,7 @@ class Database:
         if not self.patient_exists(patient_pkey):
             raise PatientNotFound()
         
-        query = 'INSERT INTO patient VALUES (%s)' % ('?,' * 66)[:-1]
+        query = 'INSERT INTO visit VALUES (%s)' % ('?,' * 66)[:-1]
         cur.execute(query, (
             visit_pkey, suffix, new_visit, patient_pkey, doctor, visit_date,
             temperature, heart_rate, blood_pressure_h, blood_pressure_l,
@@ -200,5 +200,5 @@ class Database:
             exam_pain, exam_consciousness, exam_energy_level, exam_stress_level,
             women_menarche, women_menopause, women_num_pregnant,
             women_num_child, women_miscarriage, women_leukorrhea,
-            women_birth_control, women_menstruation
+            women_birth_control, women_menstruation,
         ))
