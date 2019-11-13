@@ -205,95 +205,97 @@
                             <h6>Intake Form</h6>
                             <table class="table table-bordered">
                                 <tr>
-                                    <th class="data-label">Temp</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <th class="data-label">Temperature</th>
+                                    <td form="new-visit" name="temperature" class="data-value data-3" contenteditable="true"></td>
 
-                                    <th class="data-label">Blood</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <th class="data-label">Blood Pressure</th>
+                                    <td form="new-visit" name="blood_pressure" class="data-value data-3" contenteditable="true"></td>
 
-                                    <th class="data-label">Heart</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <th class="data-label">Heart Rate</th>
+                                    <td form="new-visit" name="heart_rate" class="data-value data-3" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Complaint</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <td form="new-visit" name="chief_complaint" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Location</th>
-                                    <td class="data-value" contenteditable="true"></td>
+                                    <td form="new-visit" name="location" class="data-value" contenteditable="true"></td>
 
                                     <th class="data-label">Onset</th>
-                                    <td class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    <td form="new-visit" name="onset" class="data-value data-2" colspan="3" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Provocation</th>
-                                    <td class="data-value" contenteditable="true"></td>
+                                    <td form="new-visit" name="provocation" class="data-value" contenteditable="true"></td>
 
                                     <th class="data-label">Palliation</th>
-                                    <td class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    <td form="new-visit" name="palliation" class="data-value data-2" colspan="3" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Quality</th>
-                                    <td class="data-value" contenteditable="true"></td>
+                                    <td form="new-visit" name="quality" class="data-value" contenteditable="true"></td>
 
                                     <th class="data-label">Region</th>
-                                    <td class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    <td form="new-visit" name="region" class="data-value data-2" colspan="3" contenteditable="true"></td>
                                 </tr>
     
                                 <tr>
                                     <th class="data-label">Severity</th>
-                                    <td class="data-value" contenteditable="true"></td>
+                                    <td form="new-visit" name="severity" class="data-value" contenteditable="true"></td>
 
                                     <th class="data-label">Frequency</th>
-                                    <td class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    <td form="new-visit" name="frequency" class="data-value data-2" colspan="3" contenteditable="true"></td>
                                 </tr>
     
                                 <tr>
                                     <th class="data-label">Timing</th>
-                                    <td class="data-value" contenteditable="true"></td>
+                                    <td form="new-visit" name="timing" class="data-value" contenteditable="true"></td>
 
                                     <th class="data-label">P. Cause</th>
-                                    <td class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    <td form="new-visit" name="possible_cause" class="data-value data-2" colspan="3" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
-                                    <th class="data-label">Remarks</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <th class="data-label">Remark</th>
+                                    <td form="new-visit" name="remark" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
-                                    <th class="data-label">P. Illness</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <th class="data-label">Present Illness</th>
+                                    <td form="new-visit" name="present_illness" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">History</th>
-                                    <td class="data-value" colspan="5" contenteditable="true">
+                                    <td form="new-visit" name="medical_history" class="data-value" colspan="5" contenteditable="true">
                                         {% if patient[14] %}{{ patient[14] }}{% endif %}
                                     </td>
                                 </tr>
+                            </table>
 
+                            <table class="table table-bordered">
                                 <tr>
                                     <th class="data-label">Medications</th>
-                                    <td class="data-value" colspan="5" contenteditable="true">
+                                    <td form="new-visit" name="medications" class="data-value" width="100%" contenteditable="true">
                                         {% if patient[15] %}{{ patient[15] }}{% endif %}
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Family HX</th>
-                                    <td class="data-value" colspan="5" contenteditable="true">
+                                    <td form="new-visit" name="family_hx" class="data-value" width="100%" contenteditable="true">
                                         {% if patient[16] %}{{ patient[16] }}{% endif %}
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Allergy</th>
-                                    <td class="data-value" colspan="5" contenteditable="true">
+                                    <td form="new-visit" name="allergy" class="data-value" width="100%" contenteditable="true">
                                         {% if patient[17] %}{{ patient[17] }}{% endif %}
                                     </td>
                                 </tr>
@@ -303,63 +305,70 @@
                             <table class="table table-bordered">
                                 <tr>
                                     <th class="data-label">Fever</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="tq_fever" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Perspiration</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="tq_perspiration" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Thirst</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="tq_thirst" class="data-value data-3" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Appetite</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="tq_appetite" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Digestion</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="tq_digestion" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Taste</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="tq_taste" class="data-value data-3" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
+                                    <th class="data-label">Bowel Movement</th>
+                                    <td form="new-visit" name="tq_bm" class="data-value" colspan="5" contenteditable="true"></td>
+                                </tr>
+                            </table>
+
+                            <table class="table table-bordered">
+                                <tr>
                                     <th class="data-label">Urine</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_urine" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Sleep</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_sleep" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
     
                                 <tr>
                                     <th class="data-label">Pain</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_pain" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Tongue</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_tongue" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Consciousness</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_consciousness" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Energy</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_energy_level" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Stress</th>
-                                    <td class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_stress_level" class="data-value data-3" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Pulse L</th>
-                                    <td class="data-value data-2" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_pulse_l" class="data-value data-2" contenteditable="true"></td>
 
                                     <th class="data-label">Pulse R</th>
-                                    <td class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    <td form="new-visit" name="exam_pulse_r" class="data-value data-2" colspan="3" contenteditable="true"></td>
                                 </tr>
                             </table>
 
@@ -368,27 +377,32 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <th class="data-label">Menarche</th>
-                                        <td class="data-value data-4" contenteditable="true"></td>
+                                        <td form="new-visit" name="women_menarche" class="data-value data-4" contenteditable="true"></td>
 
                                         <th class="data-label">Menopause</th>
-                                        <td class="data-value data-4" contenteditable="true"></td>
+                                        <td form="new-visit" name="women_menopause" class="data-value data-4" contenteditable="true"></td>
 
                                         <th class="data-label">Pregnancies</th>
-                                        <td class="data-value data-4" contenteditable="true"></td>
+                                        <td form="new-visit" name="women_num_pregrant" class="data-value data-4" contenteditable="true"></td>
 
                                         <th class="data-label">Children</th>
-                                        <td class="data-value data-4" contenteditable="true"></td>
+                                        <td form="new-visit" name="women_num_child" class="data-value data-4" contenteditable="true"></td>
                                     </tr>
 
                                     <tr>
                                         <th class="data-label">Miscarriage</th>
-                                        <td class="data-value data-4" contenteditable="true"></td>
+                                        <td form="new-visit" name="women_miscarriage" class="data-value data-4" contenteditable="true"></td>
 
                                         <th class="data-label">Leukorrhea</th>
-                                        <td class="data-value data-4" contenteditable="true"></td>
+                                        <td form="new-visit" name="women_leukorrhea" class="data-value data-4" contenteditable="true"></td>
 
                                         <th class="data-label">Birth Control</th>
-                                        <td class="data-value data-4" contenteditable="true" colspan="3"></td>                
+                                        <td form="new-visit" name="women_birth_control" class="data-value data-4" contenteditable="true" colspan="3"></td>                
+                                    </tr>
+
+                                    <tr>
+                                        <th class="data-label">Menstruation</th>
+                                        <td form="new-visit" name="women_menstruation" class="data-value" colspan="7" contenteditable="true"></td>
                                     </tr>
                                 </table>
                             {% endif %}
@@ -401,59 +415,62 @@
                                 </tr>
 
                                 <tr>
-                                    <td class="data-value" contenteditable="true"></td>
-                                    <td class="data-value" contenteditable="true" rowspan="4"></td>
-                                    <td class="data-value" contenteditable="true" rowspan="4"></td>
+                                    <td form="new-visit" name="tcm_diag_1" class="data-value" contenteditable="true"></td>
+                                    <td form="new-visit" name="treat_principle" class="data-value" contenteditable="true" rowspan="4"></td>
+                                    <td form="new-visit" name="acu_points" class="data-value" contenteditable="true" rowspan="4"></td>
                                 </tr>
 
-                                <tr><td class="data-value" contenteditable="true"></td></tr>
-                                <tr><td class="data-value" contenteditable="true"></td></tr>
-                                <tr><td class="data-value" contenteditable="true"></td></tr>
+                                <tr><td form="new-visit" name="tcm_diag_2" class="data-value" contenteditable="true"></td></tr>
+                                <tr><td form="new-visit" name="tcm_diag_3" class="data-value" contenteditable="true"></td></tr>
+                                <tr><td form="new-visit" name="tcm_diag_4" class="data-value" contenteditable="true"></td></tr>
                             </table>
 
                             <h6>Other Treatment</h6>
                             <table class="table table-bordered">
                                 <tr>
                                     <th class="data-label">Moxa</th>
-                                    <td class="data-value data-3"><input type="checkbox" class="data-checkbox"></td>
+                                    <td class="data-value data-3"><input form="new-visit" name="moxa" type="checkbox" class="data-checkbox"></td>
 
                                     <th class="data-label">Cupping</th>
-                                    <td class="data-value data-3"><input type="checkbox" class="data-checkbox"></td>
+                                    <td class="data-value data-3"><input form="new-visit" name="cupping" type="checkbox" class="data-checkbox"></td>
 
                                     <th class="data-label">Electro Acupuncture</th>
-                                    <td class="data-value data-3"><input type="checkbox" class="data-checkbox"></td>
+                                    <td class="data-value data-3"><input form="new-visit" name="eacu" type="checkbox" class="data-checkbox"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Auricular</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <td form="new-visit" name="auricular" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
 
                                 <tr>
                                     <th class="data-label">Condition Treated</th>
-                                    <td class="data-value" colspan="5" contenteditable="true"></td>
+                                    <td form="new-visit" name="condition_treated" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
                             </table>
 
                             <table class="table table-bordered">
                                 <tr>
                                     <th class="data-label data-label-lg">Fee</th>
-                                    <td class="data-value data-2" contenteditable="true"></td>
+                                    <td form="new-visit" name="fee" class="data-value data-2" contenteditable="true"></td>
 
                                     <th class="data-label data-label-lg">Paid</th>
-                                    <td class="data-value data-2">
-                                        <input type="checkbox" class="data-checkbox">
-                                    </td>
+                                    <td class="data-value data-2"><input form="new-visit" name="paid" type="checkbox" class="data-checkbox"></td>
                                 </tr>
                             </table>
 
                             <table class="table table-bordered">
                                 <tr>
                                     <th class="data-label">Note</th>
-                                    <td class="data-value" contenteditable="true" style="width: 100%"></td>
+                                    <td form="new-visit" name="note" class="data-value" contenteditable="true" width="100%"></td>
                                 </tr>
                             </table>
                         </div>
+
+                        <div class="modal-footer">
+                            <button id="new-create" type="button" class="btn btn-success">Create</button>
+                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                        </div>                
                     </div>
                 </div>
             </div>
@@ -580,5 +597,14 @@
         <script src="/static/js/popper.min.js"></script>
         <script src="/static/js/jquery-3.4.1.min.js"></script>
         <script src="/static/js/bootstrap.min.js"></script>
+
+        <script>
+            $('#new-create').click(() => {
+                var data = {}
+                $('[form="new-visit"]').each((i, e) => {
+                    console.log(e.)
+                })
+            })
+        </script>
     </body>
 </html>
