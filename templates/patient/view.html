@@ -608,6 +608,11 @@
         <script>
             $('#new-create').click(() => {
                 $('#submitter').empty()
+                $('<input>').attr({
+                    name: 'new_visit',
+                    value: true
+                }).appendTo('#submitter');
+
                 $('[form="new-visit"]').each((i, e) => {
                     var el = $(e)
                     var name = el.attr('name')
