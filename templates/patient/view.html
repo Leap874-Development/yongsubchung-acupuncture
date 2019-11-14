@@ -155,7 +155,11 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">New Visit</h5>
+                            {% if new_visit %}
+                                <h5 class="modal-title">New Visit</h5>
+                            {% else %}
+                                <h5 class="modal-title">Returning Visit</h5>
+                            {% endif %}
                         </div>
 
                         <div class="modal-body">
@@ -200,6 +204,23 @@
                                         {% else %}<i>N/A</i>{% endif %}
                                     </td>
                                 </tr>
+
+                                {% if not new_visit %}
+                                    <tr>
+                                        <th class="data-label">History</th>
+                                        <td class="data-value" colspan="5">{{ patient[14] }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="data-label">Medication</th>
+                                        <td class="data-value" colspan="5">{{ patient[15] }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="data-label">Allergy</th>
+                                        <td class="data-value" colspan="5">{{ patient[17] }}</td>
+                                    </tr>
+                                {% endif %}
                             </table>
 
                             <h6>Intake Form</h6>
@@ -221,109 +242,124 @@
                                     <td form="new-visit" name="chief_complaint" class="data-value" colspan="6" contenteditable="true"></td>
                                 </tr>
 
-                                <tr>
-                                    <th class="data-label">Location</th>
-                                    <td form="new-visit" name="location" class="data-value" contenteditable="true" colspan="2"></td>
+                                {% if new_visit %}
+                                    <tr>
+                                        <th class="data-label">Location</th>
+                                        <td form="new-visit" name="location" class="data-value" contenteditable="true" colspan="2"></td>
 
-                                    <th class="data-label">Onset</th>
-                                    <td form="new-visit" name="onset" class="data-value data-2" colspan="3" contenteditable="true"></td>
-                                </tr>
+                                        <th class="data-label">Onset</th>
+                                        <td form="new-visit" name="onset" class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    </tr>
 
-                                <tr>
-                                    <th class="data-label">Provocation</th>
-                                    <td form="new-visit" name="provocation" class="data-value" contenteditable="true" colspan="2"></td>
+                                    <tr>
+                                        <th class="data-label">Provocation</th>
+                                        <td form="new-visit" name="provocation" class="data-value" contenteditable="true" colspan="2"></td>
 
-                                    <th class="data-label">Palliation</th>
-                                    <td form="new-visit" name="palliation" class="data-value data-2" colspan="3" contenteditable="true"></td>
-                                </tr>
+                                        <th class="data-label">Palliation</th>
+                                        <td form="new-visit" name="palliation" class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    </tr>
 
-                                <tr>
-                                    <th class="data-label">Quality</th>
-                                    <td form="new-visit" name="quality" class="data-value" contenteditable="true" colspan="2"></td>
+                                    <tr>
+                                        <th class="data-label">Quality</th>
+                                        <td form="new-visit" name="quality" class="data-value" contenteditable="true" colspan="2"></td>
 
-                                    <th class="data-label">Region</th>
-                                    <td form="new-visit" name="region" class="data-value data-2" colspan="3" contenteditable="true"></td>
-                                </tr>
-    
-                                <tr>
-                                    <th class="data-label">Severity</th>
-                                    <td form="new-visit" name="severity" class="data-value" contenteditable="true" colspan="2"></td>
+                                        <th class="data-label">Region</th>
+                                        <td form="new-visit" name="region" class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    </tr>
+        
+                                    <tr>
+                                        <th class="data-label">Severity</th>
+                                        <td form="new-visit" name="severity" class="data-value" contenteditable="true" colspan="2"></td>
 
-                                    <th class="data-label">Frequency</th>
-                                    <td form="new-visit" name="frequency" class="data-value data-2" colspan="3" contenteditable="true"></td>
-                                </tr>
-    
-                                <tr>
-                                    <th class="data-label">Timing</th>
-                                    <td form="new-visit" name="timing" class="data-value" contenteditable="true" colspan="2"></td>
+                                        <th class="data-label">Frequency</th>
+                                        <td form="new-visit" name="frequency" class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    </tr>
+        
+                                    <tr>
+                                        <th class="data-label">Timing</th>
+                                        <td form="new-visit" name="timing" class="data-value" contenteditable="true" colspan="2"></td>
 
-                                    <th class="data-label">P. Cause</th>
-                                    <td form="new-visit" name="possible_cause" class="data-value data-2" colspan="3" contenteditable="true"></td>
-                                </tr>
+                                        <th class="data-label">P. Cause</th>
+                                        <td form="new-visit" name="possible_cause" class="data-value data-2" colspan="3" contenteditable="true"></td>
+                                    </tr>
 
-                                <tr>
-                                    <th class="data-label">Remark</th>
-                                    <td form="new-visit" name="remark" class="data-value" colspan="6" contenteditable="true"></td>
-                                </tr>
+                                    <tr>
+                                        <th class="data-label">Remark</th>
+                                        <td form="new-visit" name="remark" class="data-value" colspan="6" contenteditable="true"></td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <th class="data-label">Prev. Feedback</th>
+                                        <td class="data-value" colspan="6">N/A for now</td>
+                                    </tr>
+                                {% endif %}
 
                                 <tr>
                                     <th class="data-label">Present Illness</th>
                                     <td form="new-visit" name="present_illness" class="data-value" colspan="6" contenteditable="true"></td>
                                 </tr>
 
-                                <tr>
-                                    <th class="data-label">History</th>
-                                    <td form="new-visit" name="medical_history" class="data-value" colspan="6" contenteditable="true">
-                                        {% if patient[14] %}{{ patient[14] }}{% endif %}
-                                    </td>
-                                </tr>
+                                {% if new_visit %}
+                                    <tr>
+                                        <th class="data-label">History</th>
+                                        <td form="new-visit" name="medical_history" class="data-value" colspan="6" contenteditable="true">
+                                            {% if patient[14] %}{{ patient[14] }}{% endif %}
+                                        </td>
+                                    </tr>
+                                {% endif %}
                             </table>
 
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th class="data-label">Medications</th>
-                                    <td form="new-visit" name="medications" class="data-value" width="100%" contenteditable="true">
-                                        {% if patient[15] %}{{ patient[15] }}{% endif %}
-                                    </td>
-                                </tr>
+                            {% if new_visit %}
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="data-label">Medications</th>
+                                        <td form="new-visit" name="medications" class="data-value" width="100%" contenteditable="true">
+                                            {% if patient[15] %}{{ patient[15] }}{% endif %}
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <th class="data-label">Family HX</th>
-                                    <td form="new-visit" name="family_hx" class="data-value" width="100%" contenteditable="true">
-                                        {% if patient[16] %}{{ patient[16] }}{% endif %}
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <th class="data-label">Family HX</th>
+                                        <td form="new-visit" name="family_hx" class="data-value" width="100%" contenteditable="true">
+                                            {% if patient[16] %}{{ patient[16] }}{% endif %}
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <th class="data-label">Allergy</th>
-                                    <td form="new-visit" name="allergy" class="data-value" width="100%" contenteditable="true">
-                                        {% if patient[17] %}{{ patient[17] }}{% endif %}
-                                    </td>
-                                </tr>
-                            </table>
+                                    <tr>
+                                        <th class="data-label">Allergy</th>
+                                        <td form="new-visit" name="allergy" class="data-value" width="100%" contenteditable="true">
+                                            {% if patient[17] %}{{ patient[17] }}{% endif %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            {% endif %}
 
                             <h6>Ten Questions and ROS</h6>
                             <table class="table table-bordered">
-                                <tr>
-                                    <th class="data-label">Fever</th>
-                                    <td form="new-visit" name="tq_fever" class="data-value data-3" contenteditable="true"></td>
+                                {% if new_visit %}
+                                    <tr>
+                                        <th class="data-label">Fever</th>
+                                        <td form="new-visit" name="tq_fever" class="data-value data-3" contenteditable="true"></td>
 
-                                    <th class="data-label">Perspiration</th>
-                                    <td form="new-visit" name="tq_perspiration" class="data-value data-3" contenteditable="true"></td>
+                                        <th class="data-label">Perspiration</th>
+                                        <td form="new-visit" name="tq_perspiration" class="data-value data-3" contenteditable="true"></td>
 
-                                    <th class="data-label">Thirst</th>
-                                    <td form="new-visit" name="tq_thirst" class="data-value data-3" contenteditable="true"></td>
-                                </tr>
+                                        <th class="data-label">Thirst</th>
+                                        <td form="new-visit" name="tq_thirst" class="data-value data-3" contenteditable="true"></td>
+                                    </tr>
+                                {% endif %}
 
                                 <tr>
                                     <th class="data-label">Appetite</th>
                                     <td form="new-visit" name="tq_appetite" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Digestion</th>
-                                    <td form="new-visit" name="tq_digestion" class="data-value data-3" contenteditable="true"></td>
-
-                                    <th class="data-label">Taste</th>
-                                    <td form="new-visit" name="tq_taste" class="data-value data-3" contenteditable="true"></td>
+                                    <td form="new-visit" name="tq_digestion" class="data-value data-3" contenteditable="true" colspan="{% if new_visit %}3{% else %}1{% endif %}"></td>
+                                    
+                                    {% if new_visit %}
+                                        <th class="data-label">Taste</th>
+                                        <td form="new-visit" name="tq_taste" class="data-value data-3" contenteditable="true"></td>
+                                    {% endif %}
                                 </tr>
 
                                 <tr>
@@ -333,36 +369,42 @@
                             </table>
 
                             <table class="table table-bordered">
-                                <tr>
-                                    <th class="data-label">Urine</th>
-                                    <td form="new-visit" name="exam_urine" class="data-value" colspan="5" contenteditable="true"></td>
-                                </tr>
+                                {% if new_visit %}
+                                    <tr>
+                                        <th class="data-label">Urine</th>
+                                        <td form="new-visit" name="exam_urine" class="data-value" colspan="5" contenteditable="true"></td>
+                                    </tr>
+                                {% endif %}
 
                                 <tr>
                                     <th class="data-label">Sleep</th>
                                     <td form="new-visit" name="exam_sleep" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
     
-                                <tr>
-                                    <th class="data-label">Pain</th>
-                                    <td form="new-visit" name="exam_pain" class="data-value" colspan="5" contenteditable="true"></td>
-                                </tr>
+                                {% if new_visit %}
+                                    <tr>
+                                        <th class="data-label">Pain</th>
+                                        <td form="new-visit" name="exam_pain" class="data-value" colspan="5" contenteditable="true"></td>
+                                    </tr>
+                                {% endif %}
 
                                 <tr>
                                     <th class="data-label">Tongue</th>
                                     <td form="new-visit" name="exam_tongue" class="data-value" colspan="5" contenteditable="true"></td>
                                 </tr>
 
-                                <tr>
-                                    <th class="data-label">Consciousness</th>
-                                    <td form="new-visit" name="exam_consciousness" class="data-value data-3" contenteditable="true"></td>
+                                {% if new_visit %}
+                                    <tr>
+                                        <th class="data-label">Consciousness</th>
+                                        <td form="new-visit" name="exam_consciousness" class="data-value data-3" contenteditable="true"></td>
 
-                                    <th class="data-label">Energy</th>
-                                    <td form="new-visit" name="exam_energy_level" class="data-value data-3" contenteditable="true"></td>
+                                        <th class="data-label">Energy</th>
+                                        <td form="new-visit" name="exam_energy_level" class="data-value data-3" contenteditable="true"></td>
 
-                                    <th class="data-label">Stress</th>
-                                    <td form="new-visit" name="exam_stress_level" class="data-value data-3" contenteditable="true"></td>
-                                </tr>
+                                        <th class="data-label">Stress</th>
+                                        <td form="new-visit" name="exam_stress_level" class="data-value data-3" contenteditable="true"></td>
+                                    </tr>
+                                {% endif %}
 
                                 <tr>
                                     <th class="data-label">Pulse L</th>
@@ -596,7 +638,7 @@
 
             <!-- VISITS LIST -->
             <div>
-                <h4>Visits</h4>
+                <h4>Visits {{ new_visit }}</h4>
                 {% if visits | length == 0 %}
                     <p>This patient has no recorded visits</p>
                 {% else %}
@@ -631,8 +673,8 @@
             $('#new-create').click(() => {
                 $('#submitter').empty()
                 $('<input>').attr({
-                    name: 'new_visit',
-                    value: true
+                    value: '{{ new_visit }}' == 'True'.
+                    name: 'new_visit'
                 }).appendTo('#submitter');
 
                 $('[form="new-visit"]').each((i, e) => {

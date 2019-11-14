@@ -190,13 +190,15 @@ def patient_detail(pkey):
     if request.method == 'GET':
         results = db.patient_search(patient_pkey=pkey)
         visits = db.visit_search(patient_pkey=pkey)
+        new_visit = not len(db.visit_search(patient_pkey=pkey, new_visit='true'))
         if len(results) != 1: abort(500)
         else: patient = results[0]
         return render_template('patient/view.html',
             doctor=session['doctor'],
             pkey=pkey,
             patient=patient,
-            visits=visits
+            visits=visits,
+            new_visit=new_visit
         )
     elif request.method == 'POST':
         visit_keys = [
