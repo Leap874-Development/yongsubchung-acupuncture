@@ -33,7 +33,7 @@ def random_phone():
 		last += choice('0123456789')
 	return area_code + last
 
-N = rand(250, 350)
+N = rand(100, 200)
 for _ in range(N):
 	fake = faker.Faker()
 	person = fake.profile()
@@ -51,7 +51,7 @@ for _ in range(N):
 	if rand(0, 100) < 50: allergy = choice(allergies)
 	if rand(0, 100) < 70: attach = choice(person['website'])
 	if rand(0, 100) < 25: f2 = random_phone()
-	db.patient_add(
+	pkey = db.patient_add(
 		ln, fn, person['sex'].lower(), person['birthdate'],
 		height=rand(48, 78), weight=rand(90, 230), addr1=a1,
 		addr2=a2, phone1=random_phone(), phone2=f2,
@@ -60,6 +60,10 @@ for _ in range(N):
 		note=' '.join(fake.sentences(nb=rand(1, 5))),
 		attachment=attach
 	)
+
+	db.visit_add(True, pkey, 'admin', chief_complaint=' '.join(fake.sentences(nb=1)))
+	for _ in range(rand(3, 5)):
+		db.visit_add(False, pkey, 'admin', chief_complaint=' '.join(fake.sentences(nb=1)))
 
 # self, cur, last_name, first_name, gender, dob,
 #                     height=None, weight=None, addr1=None, addr2=None,

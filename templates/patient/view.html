@@ -354,7 +354,7 @@
                                     <td form="new-visit" name="tq_appetite" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Digestion</th>
-                                    <td form="new-visit" name="tq_digestion" class="data-value data-3" contenteditable="true" colspan="{% if new_visit %}3{% else %}1{% endif %}"></td>
+                                    <td form="new-visit" name="tq_digestion" class="data-value data-3" contenteditable="true" {%if new_visit%}colspan="3"{%endif%}></td>
                                     
                                     {% if new_visit %}
                                         <th class="data-label">Taste</th>
@@ -673,7 +673,7 @@
             $('#new-create').click(() => {
                 $('#submitter').empty()
                 $('<input>').attr({
-                    value: '{{ new_visit }}' == 'True'.
+                    value: '{{ new_visit }}' == 'True',
                     name: 'new_visit'
                 }).appendTo('#submitter');
 

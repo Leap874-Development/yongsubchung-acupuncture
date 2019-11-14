@@ -190,6 +190,12 @@ class Database:
 
         visit_date = datetime.date.today()
         pkey_date = visit_date.strftime('%y%m%d')
+        
+        new_visit = str(new_visit).lower()
+        moxa = str(moxa).lower()
+        cupping = str(cupping).lower()
+        eacu = str(eacu).lower()
+        paid = str(paid).lower()
 
         query = 'SELECT COUNT(*) FROM visit WHERE visit_pkey LIKE ?'
         suffix = cur.execute(query, ('%' + pkey_date + '%',)).fetchone()[0]
