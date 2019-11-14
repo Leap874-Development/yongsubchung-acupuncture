@@ -16,7 +16,6 @@ def with_database(func):
         return resp
     return wrapped
 
-
 class Database:
     def __init__(self, path, schema='documents/schema.sql', debug=False):
         self.path = path
@@ -27,6 +26,24 @@ class Database:
             'height', 'weight', 'addr1', 'addr2', 'phone1', 'phone2', 'email',
             'medical_history', 'medications', 'family_hx', 'allergy', 'note',
             'attachment', 'patient_pkey', 'suffix', 'create_date']
+        
+        self.visit_columns = ['visit_pkey', 'suffix', 'new_visit',
+            'patient_pkey', 'doctor', 'visit_date', 'temperature',
+            'heart_rate', 'blood_pressure_h', 'blood_pressure_l',
+            'chief_complaint', 'present_illness', 'exam_pulse_l',
+            'exam_pulse_r', 'exam_sleep', 'exam_tongue', 'tcm_diag_1',
+            'tcm_diag_2', 'tcm_diag_3', 'tcm_diag_4', 'treat_principle',
+            'acu_points', 'moxa', 'cupping', 'eacu', 'auricular',
+            'condition_treated', 'fee', 'paid', 'paid_check_by', 'note',
+            'feedback', 'exam_appetite', 'exam_digest', 'exam_bm', 'location',
+            'onset', 'provocation', 'palliation', 'quality', 'region',
+            'severity', 'frequency', 'timing', 'possible_cause', 'remark',
+            'tq_fever', 'tq_perspiration', 'tq_thirst', 'tq_appetite',
+            'tq_digestion', 'tq_taste', 'tq_bm', 'exam_urine', 'exam_pain',
+            'exam_consciousness', 'exam_energy_level', 'exam_stress_level',
+            'women_menarche', 'women_menopause', 'women_num_pregnant',
+            'women_num_child', 'women_miscarriage', 'women_leukorrhea',
+            'women_birth_control', 'women_menstruation']
 
         conn = sqlite3.connect(path)
         cur = conn.cursor()
@@ -91,7 +108,6 @@ class Database:
         query = 'DELETE FROM patient WHERE patient_pkey=?'
         cur.execute(query, (pkey,))
 
-    # WARNING: data keywords must be trusted
     @with_database
     def patient_update(self, cur, pkey, data):
         middle = []
@@ -99,7 +115,7 @@ class Database:
         for key in data:
             if key not in self.patient_columns:
                 raise InvalidColumn()
-            middle.append('%s=?' % key) # sql injection
+            middle.append('%s=?' % key)
             vals.append(data[key])
         query = 'UPDATE patient SET %s WHERE patient_pkey=?' % ', '.join(middle)
         vals.append(pkey)
@@ -111,19 +127,17 @@ class Database:
         count = cur.execute(query, (patient_pkey,)).fetchone()[0]
         return bool(count)
 
-    # WARNING: **kwargs must be trusted
     @with_database
     def patient_search(self, cur, **kwargs):
         for key in kwargs:
             if key not in self.patient_columns:
                 raise InvalidColumn()
         query = 'SELECT * FROM patient WHERE '
-        query += ' AND '.join([ a + '=?' for a in kwargs ]) # sql injection
+        query += ' AND '.join([ a + '=?' for a in kwargs ])
         values = [ kwargs[a] for a in kwargs ]
         resp = cur.execute(query, values).fetchall()
         return resp
     
-    # WARNING: columns and sort_by must be trusted
     @with_database
     def patient_search_query(self, cur, search,
                              columns=['first_name', 'last_name', 'phone1',
@@ -139,7 +153,7 @@ class Database:
         if len(search) < 3: search = ''
         query = 'SELECT * FROM patient WHERE '
         search = search.split()
-        concat = ' || " " || '.join(columns) # sql injection
+        concat = ' || " " || '.join(columns)
         values, params = [], []
         for item in search:
             for col in columns:
@@ -202,3 +216,14 @@ class Database:
             women_num_child, women_miscarriage, women_leukorrhea,
             women_birth_control, women_menstruation
         ))
+    
+    @with_database
+    def visit_search(self, cur, **kwargs):
+        for key in kwargs:
+            if key not in self.visit_columns:
+                raise InvalidColumn()
+        query = 'SELECT * FROM visit WHERE '
+        query += ' AND '.join([ a + '=?' for a in kwargs ]) + ' ORDER BY visit_date, visit_pkey DESC'
+        values = [ kwargs[a] for a in kwargs ]
+        resp = cur.execute(query, values).fetchall()
+        return resp
