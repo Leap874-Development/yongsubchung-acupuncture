@@ -102,9 +102,7 @@
                     <li class="breadcrumb-item"><a href="/home">Home</a></li>
                     <li class="breadcrumb-item active"><a href="/patient/{{ pkey }}">Patient</a></li>
                 </ol>
-            </nav>
-
-            <hr/>
+            </nav><hr/>
 
             <!-- TOOLBAR -->
             <div class="row">
@@ -127,9 +125,7 @@
                         <button type="button" data-toggle="modal" data-target="#new-visit" class="btn btn-success">New Visit</button>
                     </div>
                 </div>
-            </div>
-
-            <br/>
+            </div><br/>
 
             <!-- DELETE CONFIRM MODAL -->
             <div class="modal fade" tabindex="-1" role="dialog" id="confirmation">
@@ -596,7 +592,33 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            </div><br/>
+
+            <!-- VISITS LIST -->
+            <div>
+                <h4>Visits</h4>
+                {% if visits | length == 0 %}
+                    <p>This patient has no recorded visits</p>
+                {% else %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">Visit Date</th>
+                                <th class="border-top-0" style="width: 80%">Chief Complaint</th>
+                                <th class="border-top-0" ></th>
+                            </tr>
+                        </thead>
+
+                        {% for visit in visits %}
+                            <tr>
+                                <td>{{ visit[5] }}</td>
+                                <td>{{ visit[10] }}</td>
+                                <td><button type="button" class="btn btn-outline-primary btn-sm">View</button></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            </div><br/><br/>
         </div>
 
         <script src="/static/js/popper.min.js"></script>

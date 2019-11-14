@@ -189,12 +189,14 @@ def patient_new():
 def patient_detail(pkey):
     if request.method == 'GET':
         results = db.patient_search(patient_pkey=pkey)
+        visits = db.visit_search(patient_pkey=pkey)
         if len(results) != 1: abort(500)
         else: patient = results[0]
         return render_template('patient/view.html',
             doctor=session['doctor'],
             pkey=pkey,
-            patient=patient
+            patient=patient,
+            visits=visits
         )
     elif request.method == 'POST':
         visit_keys = [
@@ -272,21 +274,6 @@ def patient_edit(pkey):
 def patient_delete(pkey):
     db.patient_delete(pkey)
     return redirect('/home?alert=Patient deleted')
-
-@app.route('/visit/<pkey>')
-@require_authentication
-def visit_detail(pkey):
-    return 'ok'
-
-@app.route('/visit/<pkey>/edit')
-@require_authentication
-def visit_edit(pkey):
-    return 'ok'
-
-@app.route('/visit/<pkey>/delete')
-@require_authentication
-def visit_delete(pkey):
-    return 'ok'
 
 app.run(
     debug=config['debug'],

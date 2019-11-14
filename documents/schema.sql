@@ -110,8 +110,6 @@ create table visit (
 	women_menstruation	TEXT
 );
 
-
-
 -- 0  create_date
 -- 1  suffix
 -- 2  patient_key
