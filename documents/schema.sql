@@ -68,7 +68,7 @@ create table visit (
 	fee					REAL,
 	paid				BOOLEAN,
 	paid_check_by		TEXT, 		-- Doctor(username) who received the fee.
-	note				TEXT
+	note				TEXT,
 
 	-- VISIT ONLY
 	feedback			TEXT,
