@@ -212,7 +212,10 @@ def patient_detail(pkey):
             'exam_stress_level', 'exam_pulse_l', 'exam_pulse_r', 'tcm_diag_1',
             'treat_principle', 'acu_points', 'tcm_diag_2', 'tcm_diag_3',
             'tcm_diag_4', 'moxa', 'cupping', 'eacu', 'auricular',
-            'condition_treated', 'fee', 'paid', 'note'
+            'condition_treated', 'fee', 'paid', 'note', 'women_menarche',
+            'women_menopause', 'women_num_pregnant', 'women_num_child',
+            'women_miscarriage', 'women_leukorrhea', 'women_birth_control',
+            'women_menstruation'
         ]
 
         patient_keys = [

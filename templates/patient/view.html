@@ -354,7 +354,7 @@
                                     <td form="new-visit" name="tq_appetite" class="data-value data-3" contenteditable="true"></td>
 
                                     <th class="data-label">Digestion</th>
-                                    <td form="new-visit" name="tq_digestion" class="data-value data-3" contenteditable="true" {%if new_visit%}colspan="3"{%endif%}></td>
+                                    <td form="new-visit" name="tq_digestion" class="data-value data-3" contenteditable="true" {%if not new_visit%}colspan="3"{%endif%}></td>
                                     
                                     {% if new_visit %}
                                         <th class="data-label">Taste</th>
@@ -426,7 +426,7 @@
                                         <td form="new-visit" name="women_menopause" class="data-value data-4" contenteditable="true"></td>
 
                                         <th class="data-label">Pregnancies</th>
-                                        <td form="new-visit" name="women_num_pregrant" class="data-value data-4" contenteditable="true"></td>
+                                        <td form="new-visit" name="women_num_pregnant" class="data-value data-4" contenteditable="true"></td>
 
                                         <th class="data-label">Children</th>
                                         <td form="new-visit" name="women_num_child" class="data-value data-4" contenteditable="true"></td>
@@ -662,6 +662,7 @@
                 {% endif %}
             </div><br/><br/>
 
+            <!-- VISIT VIEW MODALS -->
             {% for visit in visits %}
                 <div class="modal fade" id="modal-{{ visit[0] }}" tabindex="-1">
                     <div class="modal-dialog modal-lg" role="document">
@@ -742,11 +743,11 @@
                                         <td form="new-visit" name="temperature" class="data-value data-3">{{ visit[6] }}</td>
     
                                         <th class="data-label">Blood Pressure</th>
-                                        <td form="new-visit" name="blood_pressure_l" class="data-value data-6">{{ visit[8] }}</td>
-                                        <td form="new-visit" name="blood_pressure_h" class="data-value data-6">{{ visit[9] }}</td>
+                                        <td form="new-visit" name="blood_pressure_l" class="data-value data-6">{{ visit[9] }}</td>
+                                        <td form="new-visit" name="blood_pressure_h" class="data-value data-6">{{ visit[8] }}</td>
     
                                         <th class="data-label">Heart Rate</th>
-                                        <td form="new-visit" name="heart_rate" class="data-value data-3">{{ visit[8] }}</td>
+                                        <td form="new-visit" name="heart_rate" class="data-value data-3">{{ visit[7] }}</td>
                                     </tr>
     
                                     <tr>
@@ -760,7 +761,7 @@
                                             <td form="new-visit" name="location" class="data-value" colspan="2">{{ visit[35] }}</td>
     
                                             <th class="data-label">Onset</th>
-                                            <td form="new-visit" name="onset" class="data-value data-2" colspan="3">{{ visit[37] }}</td>
+                                            <td form="new-visit" name="onset" class="data-value data-2" colspan="3">{{ visit[36] }}</td>
                                         </tr>
     
                                         <tr>
@@ -1052,6 +1053,8 @@
                     var el = $(e)
                     var name = el.attr('name')
                     var val = el.text()
+                    console.log(name, val)
+
                     if (el.is('input')) val = el.prop('checked')
 
                     $('<input>').attr({
