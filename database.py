@@ -229,7 +229,7 @@ class Database:
             if key not in self.visit_columns:
                 raise InvalidColumn()
         query = 'SELECT * FROM visit WHERE '
-        query += ' AND '.join([ a + '=?' for a in kwargs ]) + ' ORDER BY visit_date, visit_pkey DESC'
+        query += ' AND '.join([ a + '=?' for a in kwargs ]) + ' ORDER BY visit_date DESC, visit_pkey DESC'
         values = [ kwargs[a] for a in kwargs ]
         resp = cur.execute(query, values).fetchall()
         return resp
