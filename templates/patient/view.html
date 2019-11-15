@@ -151,7 +151,7 @@
             </div>
 
             <!-- NEW VISIT MODAL -->
-            <div class=" modal fade" id="new-visit" tabindex="-1">
+            <div class="modal fade" id="new-visit" tabindex="-1">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -655,12 +655,383 @@
                             <tr>
                                 <td>{{ visit[5] }}</td>
                                 <td>{{ visit[10] }}</td>
-                                <td><button type="button" class="btn btn-outline-primary btn-sm">View</button></td>
+                                <td><button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-{{ visit[0] }}">View</button></td>
                             </tr>
                         {% endfor %}
                     </table>
                 {% endif %}
             </div><br/><br/>
+
+            {% for visit in visits %}
+                <div class="modal fade" id="modal-{{ visit[0] }}" tabindex="-1">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                {% if visit[2] == 'true' %}
+                                    <h5 class="modal-title">New Visit {{ visit[0] }}</h5>
+                                {% else %}
+                                    <h5 class="modal-title">Returning Visit {{ visit[0] }}</h5>
+                                {% endif %}
+                            </div>
+    
+                            <div class="modal-body">
+                                <h6>{{ pkey }}</h6>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="data-label">Fname</th>
+                                        <td class="data-value data-3">
+                                            {% if patient[4] %} {{ patient[4] }}
+                                            {% else %}<i>N/A</i>{% endif %}
+                                        </td>
+                                        <th class="data-label">Lname</th>
+                                        <td class="data-value data-3">
+                                            {% if patient[3] %} {{ patient[3] }}
+                                            {% else %}<i>N/A</i>{% endif %}
+                                        </td>
+                                        <th class="data-label">DOB</th>
+                                        <td class="data-value data-3">
+                                            {% if patient[6] %} {{ patient[6] }}
+                                            {% else %}<i>N/A</i>{% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="data-label">Gender</th>
+                                        <td class="data-value">
+                                            {% if patient[5] %} 
+                                                {% if patient[5] == 'm' %}
+                                                    Male
+                                                {% else %}
+                                                    Female
+                                                {% endif %}
+                                            {% else %}<i>N/A</i>{% endif %}
+                                        </td>
+                                        <th class="data-label">Height</th>
+                                        <td class="data-value">
+                                            {% if patient[7] %} {{ patient[7] }}
+                                            {% else %}<i>N/A</i>{% endif %}
+                                        </td>
+                                        <th class="data-label">Weight</th>
+                                        <td class="data-value">
+                                            {% if patient[8] %} {{ patient[8] }}
+                                            {% else %}<i>N/A</i>{% endif %}
+                                        </td>
+                                    </tr>
+    
+                                    {% if not new_visit %}
+                                        <tr>
+                                            <th class="data-label">History</th>
+                                            <td class="data-value" colspan="5">{{ patient[14] }}</td>
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Medication</th>
+                                            <td class="data-value" colspan="5">{{ patient[15] }}</td>
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Allergy</th>
+                                            <td class="data-value" colspan="5">{{ patient[17] }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+    
+                                <h6>Intake Form</h6>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="data-label">Temperature</th>
+                                        <td form="new-visit" name="temperature" class="data-value data-3">{{ visit[6] }}</td>
+    
+                                        <th class="data-label">Blood Pressure</th>
+                                        <td form="new-visit" name="blood_pressure_l" class="data-value data-6">{{ visit[8] }}</td>
+                                        <td form="new-visit" name="blood_pressure_h" class="data-value data-6">{{ visit[9] }}</td>
+    
+                                        <th class="data-label">Heart Rate</th>
+                                        <td form="new-visit" name="heart_rate" class="data-value data-3">{{ visit[8] }}</td>
+                                    </tr>
+    
+                                    <tr>
+                                        <th class="data-label">Complaint</th>
+                                        <td form="new-visit" name="chief_complaint" class="data-value" colspan="6">{{ visit[10] }}</td>
+                                    </tr>
+    
+                                    {% if visit[2] == 'true' %}
+                                        <tr>
+                                            <th class="data-label">Location</th>
+                                            <td form="new-visit" name="location" class="data-value" colspan="2">{{ visit[35] }}</td>
+    
+                                            <th class="data-label">Onset</th>
+                                            <td form="new-visit" name="onset" class="data-value data-2" colspan="3">{{ visit[37] }}</td>
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Provocation</th>
+                                            <td form="new-visit" name="provocation" class="data-value" colspan="2">{{ visit[37] }}</td>
+    
+                                            <th class="data-label">Palliation</th>
+                                            <td form="new-visit" name="palliation" class="data-value data-2" colspan="3">{{ visit[38] }}</td>
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Quality</th>
+                                            <td form="new-visit" name="quality" class="data-value" colspan="2">{{ visit[39] }}</td>
+    
+                                            <th class="data-label">Region</th>
+                                            <td form="new-visit" name="region" class="data-value data-2" colspan="3">{{ visit[40] }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th class="data-label">Severity</th>
+                                            <td form="new-visit" name="severity" class="data-value" colspan="2">{{ visit[41] }}</td>
+    
+                                            <th class="data-label">Frequency</th>
+                                            <td form="new-visit" name="frequency" class="data-value data-2" colspan="3">{{ visit[42] }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th class="data-label">Timing</th>
+                                            <td form="new-visit" name="timing" class="data-value" colspan="2">{{ visit[43] }}</td>
+    
+                                            <th class="data-label">P. Cause</th>
+                                            <td form="new-visit" name="possible_cause" class="data-value data-2" colspan="3">{{ visit[44] }}</td>
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Remark</th>
+                                            <td form="new-visit" name="remark" class="data-value" colspan="6">{{ visit[45] }}</td>
+                                        </tr>
+                                    {% else %}{% endif %}
+    
+                                    <tr>
+                                        <th class="data-label">Present Illness</th>
+                                        <td form="new-visit" name="present_illness" class="data-value" colspan="6">{{ visit[11] }}</td>
+                                    </tr>
+    
+                                    {% if visit[2] == 'true' %}
+                                        <tr>
+                                            <th class="data-label">History</th>
+                                            <td form="new-visit" name="medical_history" class="data-value" colspan="6">
+                                                {{ patient[14] }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+    
+                                {% if visit[2] == 'true' %}
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th class="data-label">Medications</th>
+                                            <td form="new-visit" name="medications" class="data-value" width="100%">
+                                                {{ patient[15] }}
+                                            </td>
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Family HX</th>
+                                            <td form="new-visit" name="family_hx" class="data-value" width="100%">
+                                                {{ patient[16] }}
+                                            </td>
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Allergy</th>
+                                            <td form="new-visit" name="allergy" class="data-value" width="100%">
+                                                {{ patient[17] }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                {% endif %}
+    
+                                <h6>Ten Questions and ROS</h6>
+                                <table class="table table-bordered">
+                                    {% if visit[2] == 'true' %}
+                                        <tr>
+                                            <th class="data-label">Fever</th>
+                                            <td form="new-visit" name="tq_fever" class="data-value data-3">{{ visit[46] }}</td>
+    
+                                            <th class="data-label">Perspiration</th>
+                                            <td form="new-visit" name="tq_perspiration" class="data-value data-3">{{ visit[47] }}</td>
+    
+                                            <th class="data-label">Thirst</th>
+                                            <td form="new-visit" name="tq_thirst" class="data-value data-3">{{ visit[48] }}</td>
+                                        </tr>
+                                    {% endif %}
+    
+                                    <tr>
+                                        <th class="data-label">Appetite</th>
+                                        <td form="new-visit" name="tq_appetite" class="data-value data-3">{{ visit[49] }}</td>
+    
+                                        <th class="data-label">Digestion</th>
+                                        <td form="new-visit" name="tq_digestion" class="data-value data-3" {%if new_visit%}colspan="3"{%endif%}>{{ visit[50] }}</td>
+                                        
+                                        {% if visit[2] == 'true' %}
+                                            <th class="data-label">Taste</th>
+                                            <td form="new-visit" name="tq_taste" class="data-value data-3">{{ visit[51] }}</td>
+                                        {% endif %}
+                                    </tr>
+    
+                                    <tr>
+                                        <th class="data-label">Bowel Movement</th>
+                                        <td form="new-visit" name="tq_bm" class="data-value" colspan="5">{{ visit[52] }}</td>
+                                    </tr>
+                                </table>
+    
+                                <table class="table table-bordered">
+                                    {% if visit[2] == 'true' %}
+                                        <tr>
+                                            <th class="data-label">Urine</th>
+                                            <td form="new-visit" name="exam_urine" class="data-value" colspan="5">{{ visit[53] }}</td>
+                                        </tr>
+                                    {% endif %}
+    
+                                    <tr>
+                                        <th class="data-label">Sleep</th>
+                                        <td form="new-visit" name="exam_sleep" class="data-value" colspan="5">{{ visit[14] }}</td>
+                                    </tr>
+        
+                                    {% if visit[2] == 'true' %}
+                                        <tr>
+                                            <th class="data-label">Pain</th>
+                                            <td form="new-visit" name="exam_pain" class="data-value" colspan="5">{{ visit[54] }}</td>
+                                        </tr>
+                                    {% endif %}
+    
+                                    <tr>
+                                        <th class="data-label">Tongue</th>
+                                        <td form="new-visit" name="exam_tongue" class="data-value" colspan="5">{{ visit[15] }}</td>
+                                    </tr>
+    
+                                    {% if visit[2] == 'true' %}
+                                        <tr>
+                                            <th class="data-label">Consciousness</th>
+                                            <td form="new-visit" name="exam_consciousness" class="data-value data-3">{{ visit[55] }}</td>
+    
+                                            <th class="data-label">Energy</th>
+                                            <td form="new-visit" name="exam_energy_level" class="data-value data-3">{{ visit[56] }}</td>
+    
+                                            <th class="data-label">Stress</th>
+                                            <td form="new-visit" name="exam_stress_level" class="data-value data-3">{{ visit[57] }}</td>
+                                        </tr>
+                                    {% endif %}
+    
+                                    <tr>
+                                        <th class="data-label">Pulse L</th>
+                                        <td form="new-visit" name="exam_pulse_l" class="data-value data-2">{{ visit[12] }}</td>
+    
+                                        <th class="data-label">Pulse R</th>
+                                        <td form="new-visit" name="exam_pulse_r" class="data-value data-2" colspan="3">{{ visit[13] }}</td>
+                                    </tr>
+                                </table>
+    
+                                {% if patient[5] == 'f' %}
+                                    <h6>Women Only</h6>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th class="data-label">Menarche</th>
+                                            <td form="new-visit" name="women_menarche" class="data-value data-4">{{ visit[58] }}</td>
+    
+                                            <th class="data-label">Menopause</th>
+                                            <td form="new-visit" name="women_menopause" class="data-value data-4">{{ visit[59] }}</td>
+    
+                                            <th class="data-label">Pregnancies</th>
+                                            <td form="new-visit" name="women_num_pregrant" class="data-value data-4">{{ visit[60] }}</td>
+    
+                                            <th class="data-label">Children</th>
+                                            <td form="new-visit" name="women_num_child" class="data-value data-4">{{ visit[61] }}</td>
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Miscarriage</th>
+                                            <td form="new-visit" name="women_miscarriage" class="data-value data-4">{{ visit[62] }}</td>
+    
+                                            <th class="data-label">Leukorrhea</th>
+                                            <td form="new-visit" name="women_leukorrhea" class="data-value data-4">{{ visit[63] }}</td>
+    
+                                            <th class="data-label">Birth Control</th>
+                                            <td form="new-visit" name="women_birth_control" class="data-value data-4" colspan="3">{{ visit[64] }}</td>                
+                                        </tr>
+    
+                                        <tr>
+                                            <th class="data-label">Menstruation</th>
+                                            <td form="new-visit" name="women_menstruation" class="data-value" colspan="7">{{ visit[65] }}</td>
+                                        </tr>
+                                    </table>
+                                {% endif %}
+    
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="data-label-top">TCM Diagnosis</th>
+                                        <th class="data-label-top">Treatment Principle</th>
+                                        <th class="data-label-top">Acupuncture Points</th>
+                                    </tr>
+    
+                                    <tr>
+                                        <td form="new-visit" name="tcm_diag_1" class="data-value">{{ visit[16] }}</td>
+                                        <td form="new-visit" name="treat_principle" class="data-value" rowspan="4">{{ visit[20] }}</td>
+                                        <td form="new-visit" name="acu_points" class="data-value" rowspan="4">{{ visit[21] }}</td>
+                                    </tr>
+    
+                                    <tr><td form="new-visit" name="tcm_diag_2" class="data-value">{{ visit[17] }}</td></tr>
+                                    <tr><td form="new-visit" name="tcm_diag_3" class="data-value">{{ visit[18] }}</td></tr>
+                                    <tr><td form="new-visit" name="tcm_diag_4" class="data-value">{{ visit[19] }}</td></tr>
+                                </table>
+    
+                                <h6>Other Treatment</h6>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="data-label">Moxa</th>
+                                        <td class="data-value data-3">
+                                            <input form="new-visit" name="moxa" type="checkbox" class="data-checkbox" onclick="return false;" {% if visit[22] == 'true' %}checked{% endif %}>
+                                        </td>
+    
+                                        <th class="data-label">Cupping</th>
+                                        <td class="data-value data-3">
+                                            <input form="new-visit" name="cupping" type="checkbox" class="data-checkbox" onclick="return false;" {% if visit[23] == 'true' %}checked{% endif %}>
+                                        </td>
+    
+                                        <th class="data-label">Electro Acupuncture</th>
+                                        <td class="data-value data-3">
+                                            <input form="new-visit" name="eacu" type="checkbox" class="data-checkbox" onclick="return false;" {% if visit[24] == 'true' %}checked{% endif %}>
+                                        </td>
+                                    </tr>
+    
+                                    <tr>
+                                        <th class="data-label">Auricular</th>
+                                        <td form="new-visit" name="auricular" class="data-value" colspan="5">{{ visit[25] }}</td>
+                                    </tr>
+    
+                                    <tr>
+                                        <th class="data-label">Condition Treated</th>
+                                        <td form="new-visit" name="condition_treated" class="data-value" colspan="5">{{ visit[26] }}</td>
+                                    </tr>
+                                </table>
+    
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="data-label data-label-lg">Fee</th>
+                                        <td form="new-visit" name="fee" class="data-value data-2">${{ visit[27] }}</td>
+    
+                                        <th class="data-label data-label-lg">Paid</th>
+                                        <td class="data-value data-2">
+                                            <input form="new-visit" name="paid" type="checkbox" class="data-checkbox" onclick="return false;" {% if visit[28] == 'true' %}checked{% endif %}>
+                                        </td>
+                                    </tr>
+                                </table>
+    
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th class="data-label">Note</th>
+                                        <td form="new-visit" name="note" class="data-value" width="100%">{{ visit[30] }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+    
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                            </div>                
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
 
         <script src="/static/js/popper.min.js"></script>
