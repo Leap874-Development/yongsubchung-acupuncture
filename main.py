@@ -175,6 +175,13 @@ def home():
         reverse=str(reverse).lower()
     )
 
+@app.route('/visit/<pkey>/paid', methods=['POST'])
+@require_authentication
+def visit_paid(pkey):
+    paid = request.values.get('paid')
+    db.visit_paid(pkey, paid=paid)
+    return 'OK'
+
 @app.route('/patient/new', methods=['GET', 'POST'])
 @require_authentication
 def patient_new():

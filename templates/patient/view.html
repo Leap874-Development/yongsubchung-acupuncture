@@ -1013,7 +1013,10 @@
     
                                         <th class="data-label data-label-lg">Paid</th>
                                         <td class="data-value data-2">
-                                            <input form="new-visit" name="paid" type="checkbox" class="data-checkbox" onclick="return false;" {% if visit[28] == 'true' %}checked{% endif %}>
+                                            <input form="new-visit" visit_pkey="{{ visit[0] }}"
+                                                   name="paid" type="checkbox"
+                                                   class="data-checkbox paid-checkbox"
+                                                   {% if visit[28] == 'true' %}checked{% endif %}>
                                         </td>
                                     </tr>
                                 </table>
@@ -1027,6 +1030,7 @@
                             </div>
     
                             <div class="modal-footer">
+                                <span id="help-{{ visit[0] }}" class="font-weight-light">all changes saved</span>
                                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
                             </div>                
                         </div>
@@ -1063,6 +1067,16 @@
                     }).appendTo('#submitter');
                 })
                 $('#submitter').submit()
+            })
+
+            $('.paid-checkbox').click((e) => {
+                var paid = $(e.target).is(':checked')
+                var pkey = $(e.target).attr('visit_pkey')
+
+                $(`#help-${pkey}`).text('updating changes...')
+                $.post(`/visit/${pkey}/paid`, {paid: paid}, () => {
+                    $(`#help-${pkey}`).text('all changes saved')
+                })
             })
         </script>
     </body>

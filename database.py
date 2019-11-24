@@ -246,7 +246,14 @@ class Database:
         query += ' ORDER BY visit_date DESC, visit_pkey DESC'
         resp = cur.execute(query, [ a.strftime('%Y-%m-%d') for a in values ]).fetchall()
         return resp
+    
+    @with_database
+    def visit_paid(self, cur, visit_pkey, paid=True):
+        paid = str(paid).lower()
+        query = 'UPDATE visit SET paid=? WHERE visit_pkey=?'
+        cur.execute(query, (paid, visit_pkey))
 
-# db = Database('database.db')
+db = Database('database.db')
 # x = db.visit_between(date.today() - timedelta(days=30), date.today())
 # print(x)
+# db.visit_paid('A191115321')
