@@ -95,6 +95,14 @@
 
             <br/>
 
+            <div id="dob-error" class="alert alert-danger" hidden>
+                Invalid DOB format
+
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
             <!-- PATIENT DATA -->
             <table class="table table-bordered">
                 <tr>
@@ -209,6 +217,14 @@
                 'attachment'
             ]
 
+            function valiDate(date) {
+                digits = date.split('-')
+                if (digits.length != 3) return false
+                for (var d in digits)
+                    if (isNaN(digits[d]) || digits[d] == '') return false
+                return true
+            }
+
             $('#save').click(() => {
                 vals.forEach((val) => {
                     var formItem = $(`input[name=${val}]`)
@@ -218,7 +234,14 @@
                     if (value) formItem.val(value)
                     else formItem.val(text)
                 })
-                $('#form').submit()
+
+                var birthdate = $('input[name=dob]').val()
+                if (valiDate(birthdate)) $('#form').submit()
+                else {
+                    $('#dob').css('border-color', 'red')
+                    $('#dob').css('border-width', '2px')
+                    $('#dob-error').attr('hidden', false)
+                }
             })
 
             $('#cancel').click(() => {

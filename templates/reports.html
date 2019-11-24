@@ -17,6 +17,48 @@
             margin-top: 10px;
         }
 
+        .data-label-top {
+            width: 0%;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .data-label {
+            width: 10%;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .data-label-lg {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .data-checkbox {
+            width: 20px;
+            height: 20px;
+        }
+
+        .data-value {
+            text-align: left;
+        }
+
+        .data-6 {
+            width: calc(70% / 6);
+        }
+
+        .data-4 {
+            width: calc(70% / 4);
+        }
+
+        .data-3 {
+            width: calc(70% / 3);
+        }
+
+        .data-2 {
+            width: calc(70% / 2);
+        }
+
         #header {
             width: 500px;
             height: 63px;
@@ -65,9 +107,21 @@
 
             <hr/>
 
-            <h3>Reports</h3>
+            <h3>Revenue Report</h3>
 
+            <table class="table table-bordered">
+                <tr>
+                    <th class="data-label">From</th>
+                    <td class="data-input" contenteditable="true">{{ min }}</td>
+
+                    <th class="data-label">To</th>
+                    <td class="data-input" contenteditable="true">{{ max }}</td>
+                </tr>
+            </table>
             
+            <h4>Result</h4>
+            <p>Total: {{ visits | length }} visits, ${{ dollar_total }}</p>
+
         </div>
 
         <script src="/static/js/popper.min.js"></script>

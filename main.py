@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, session, abort
-from datetime import datetime
+from datetime import datetime, timedelta, date
 import json
 import database
 import secrets
@@ -105,7 +105,30 @@ def logout():
 @app.route('/reports')
 @require_authentication
 def reports():
-    return render_template('reports.html', doctor=session['doctor'])
+    date_min_s = request.args.get('min')
+    date_max_s = request.args.get('max')
+    if not date_min_s or not date_max_s:
+        date_min_s = date.today().strftime('%Y-%m-%d')
+        date_max_s = date.today().strftime('%Y-%m-%d')
+
+    date_min = datetime.strptime(date_min_s, '%Y-%m-%d')
+    date_max = datetime.strptime(date_max_s, '%Y-%m-%d')
+    doctors = db.doctor_list()
+
+    visits = db.visit_between(date_min, date_max)
+    prices = [ a[27] for a in visits ]
+    prices = [ a if a else 0 for a in prices ]
+    prices = [ int(a) for a in prices ]
+
+    dollar_total = sum(prices)
+    return render_template('reports.html',
+        doctor=session['doctor'],
+        doctors=doctors,
+        visits=visits,
+        min=date_min_s,
+        max=date_max_s,
+        dollar_total=dollar_total
+    )
 
 @app.route('/home')
 @require_authentication

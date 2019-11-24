@@ -1,6 +1,6 @@
 from werkzeug import security
+from datetime import datetime, timedelta, date
 import sqlite3
-import datetime
 
 class DoctorExists(Exception): pass
 class PatientNotFound(Exception): pass
@@ -55,6 +55,11 @@ class Database:
         conn.close()
     
     @with_database
+    def doctor_list(self, cur):
+        query = 'SELECT username FROM doctors'
+        return cur.execute(query).fetchall()
+    
+    @with_database
     def doctor_exists(self, cur, username):
         if self.debug and username == 'admin': return True # debug login
 
@@ -86,7 +91,7 @@ class Database:
                     medications='', family_hx='', allergy='', note='',
                     attachment=''):
 
-        create_date = datetime.date.today()
+        create_date = date.today()
         pkey_date = create_date.strftime('%y%m%d')
 
         query = 'SELECT COUNT(*) FROM patient WHERE patient_pkey LIKE ?'
@@ -188,7 +193,7 @@ class Database:
                   women_miscarriage='', women_leukorrhea='',
                   women_birth_control='', women_menstruation=''):
 
-        visit_date = datetime.date.today()
+        visit_date = date.today()
         pkey_date = visit_date.strftime('%y%m%d')
         
         new_visit = str(new_visit).lower()
@@ -233,3 +238,15 @@ class Database:
         values = [ kwargs[a] for a in kwargs ]
         resp = cur.execute(query, values).fetchall()
         return resp
+    
+    @with_database
+    def visit_between(self, cur, date_min, date_max):
+        values = [date_min, date_max]
+        query = 'SELECT * FROM visit WHERE visit_date BETWEEN ? AND ?'
+        query += ' ORDER BY visit_date DESC, visit_pkey DESC'
+        resp = cur.execute(query, [ a.strftime('%Y-%m-%d') for a in values ]).fetchall()
+        return resp
+
+# db = Database('database.db')
+# x = db.visit_between(date.today() - timedelta(days=30), date.today())
+# print(x)
