@@ -246,7 +246,7 @@ class Database:
         query += ' ORDER BY visit_date DESC, visit_pkey DESC'
         resp = cur.execute(query, [ a.strftime('%Y-%m-%d') for a in values ]).fetchall()
         return resp
-    
+
     @with_database
     def visit_paid(self, cur, visit_pkey, doctor, paid=True):
         paid = str(paid).lower()
