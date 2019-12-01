@@ -179,7 +179,7 @@ def home():
 @require_authentication
 def visit_paid(pkey):
     paid = request.values.get('paid')
-    db.visit_paid(pkey, paid=paid)
+    db.visit_paid(pkey, session['doctor'], paid=paid)
     return 'OK'
 
 @app.route('/patient/new', methods=['GET', 'POST'])

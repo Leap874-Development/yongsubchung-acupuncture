@@ -240,7 +240,7 @@ class Database:
         return resp
     
     @with_database
-    def visit_between(self, cur, date_min, date_max):
+    def visit_between(self, cur, date_min, date_max, sort_by='patient_name', reverse_sort=False):
         values = [date_min, date_max]
         query = 'SELECT * FROM visit WHERE visit_date BETWEEN ? AND ?'
         query += ' ORDER BY visit_date DESC, visit_pkey DESC'
@@ -248,10 +248,10 @@ class Database:
         return resp
     
     @with_database
-    def visit_paid(self, cur, visit_pkey, paid=True):
+    def visit_paid(self, cur, visit_pkey, doctor, paid=True):
         paid = str(paid).lower()
-        query = 'UPDATE visit SET paid=? WHERE visit_pkey=?'
-        cur.execute(query, (paid, visit_pkey))
+        query = 'UPDATE visit SET paid=?, paid_check_by=? WHERE visit_pkey=?'
+        cur.execute(query, (paid, doctorm, visit_pkey))
 
 db = Database('database.db')
 # x = db.visit_between(date.today() - timedelta(days=30), date.today())
